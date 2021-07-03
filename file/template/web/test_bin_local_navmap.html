@@ -1,0 +1,151 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="test_bin.css">
+</head>
+
+<body>
+    <div class="layout">
+        <button id="btnReset" onclick="reset()">回归主视图</button>
+		<button id="planform" >导航图</button>
+		<button id="nav_FirstPersonView" >第一人称视角:关闭</button>
+		<p>选择建筑物:
+		<input id="nav_BuildNumber">
+		<button id="nav_SetBuildNumber" >提交</button>
+		</p>
+		<p>选择地板高度:
+		<input id="nav_FloorHeight">
+		<button id="nav_SetFloorHeight" >提交</button>
+		</p>
+		<button id="setCollisionOn" >碰撞开</button>
+		<button id="setCollisionOff" >碰撞关</button>
+		<button id="disableSelect">不能选中地面</button>
+		<button id="reSelect">可以选中地面</button>
+		<button id="show" style="background-color:#666666; display:none;"> show </button>
+		<button id="hide" style="background-color:#666666; display:none;"> hide </button>
+    </div>
+
+    <canvas height="720" width="1280" id="showcanvas"> </canvas>
+	<canvas style="display:none;" id="navmap" width="480" height="480"></canvas>
+
+
+    <div id="Navmap" class="Navmap" style="display:none">
+        <button style="position:absolute; top:1%;right:1%" onclick="hideNavmap()">X</button>
+        <svg height="480" width="480" xmlns="http://www.w3.org/2000/svg" version="1.1">
+			<polygon id="navigationpolygon" points="150,135 144,144 156,144"
+				style="fill:lime;stroke:purple;stroke-width:1" />
+			<circle id="navigationCircle" cx="150" cy="150" r="6" stroke="black" stroke-width="1" opacity="1"
+				fill="#11DAB7"></circle>
+		</svg>
+    </div>
+</body>
+
+<script src="js/websocket.js"></script>
+<script src="js/global_vars.js"></script>
+<script src="js/basic_functions.js"></script>
+<script src="js/basic_buttons.js"></script>
+<script src="js/window_ops.js"></script>
+<script src="js/canvas_ops.js"></script>
+<script src="js/navigation_map.js"></script>
+
+<script>
+	document.getElementById("setCollisionOn").onclick = function(e) {
+		console.log("setCollisionOn")
+		data.type = 48;
+		data.extraType = 7;
+		ws1.send(code(data));
+	}
+	document.getElementById("setCollisionOff").onclick = function(e) {
+		console.log("setCollisionOff")
+		data.type = 48;
+		data.extraType = 8;
+		ws1.send(code(data));
+	}
+
+    function f (e) {
+        var e = e || window.event;  //标准化事件处理
+        var s = e.type + " " + e.keyCode;  //获取键盘事件类型和按下的值
+        key.value = s;
+    }
+	function keyDown(event){  // 方向键控制元素移动函数
+        var event = event || window.event;  // 标准化事件对象
+		data.type = 48;
+		data.extraType = 0;
+		data.dx = 0;
+		data.dy = 0;;
+		data.posx = 0;
+		data.posy = 0;
+        switch(event.keyCode){  // 获取当前按下键盘键的编码
+            case 87 :  // 按下w键
+                data.posy = 1;
+                break;
+            case 83 :  // 按下s键
+                data.posy = -1;
+                break;
+            case 65 :  // 按下a键
+                data.posx = -1;
+                break;
+            case 68 :  // 按下d键
+                data.posx = 1;
+                break;
+			case 81 :  // 按下q键
+                data.dx = -1;
+                break;
+			case 69 :  // 按下e键
+                data.dx = 1;
+                break;
+        }
+		ws1.send(code(data));
+        return false
+    }
+	document.getElementById("disableSelect").onclick = function(e) {
+		console.log("disableSelect")
+		data.type = 1033;
+		data.uuid = '1;1;0;OST_Topography';
+		ws1.send(code(data));
+	}
+	document.getElementById("reSelect").onclick = function(e) {
+		console.log("reSelect")
+		data.type = 1033;
+		data.uuid = '2;1;0;OST_Topography';
+		ws1.send(code(data));
+	}
+	function doNavMapScreenShot(){
+		data.type = 103;
+		//后端尺寸
+		data.dx = 480;
+		data.dy = 480;
+		//前端尺寸
+		data.posx = 480;
+		data.posy = 480;
+		data_bak.uuid = "screenShot";
+		ws1.send(code(data));
+		showNavmap();
+	}
+
+	document.getElementById("planform").onclick = function(e) {
+		console.log("planform")
+		doNavMapScreenShot();
+	}
+	var nav_first_view_en = false;
+	document.getElementById("nav_FirstPersonView").onclick = function(e) {
+		console.log("nav_FirstPersonView");
+		data.type = 48;    
+		data.extraType = nav_first_view_en ? 11:10; 
+		ws1.send(code(data));
+		nav_first_view_en = !nav_first_view_en;
+		if(nav_first_view_en)
+		{
+			this.innerHTML ="第一人称视角:打开";
+			document.onkeydown =keyDown;  //注册keydown事件处理函数
+		}else{
+			this.innerHTML ="第一人称视角:关闭";
+			document.onkeydown = null;  //注册keydown事件处理函数
+		}
+	}
+</script>
+
+</html>

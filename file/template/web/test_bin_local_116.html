@@ -1,0 +1,108 @@
+﻿<!DOCTYPE html>
+<!-- Land Intensity Indexs linkage, 土地强度指数联动，uuid为用地红线。 使用 site1125.cim 模型测试 -->
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="test_bin.css">
+</head>
+
+<body>
+    <div class="layout">
+        <!-- <button id="area_highlight">Area_Highlight</button>
+        <p id="area_highlight_p"></p>
+        <button id="building_highlight">BLDG_Highlight</button>
+        <p id="building_highlight_p"></p>
+        <button id="mixed_highlight">Mixed_Highlight</button>
+        <p id="mixed_highlight_p"></p>
+
+        <button id="set_cam_level">Set_Cam_Level</button>
+        <p id="set_cam_level_p"></p>
+        <button id="model_highlight">Model_Highlight</button>
+        <p id="model_highlight_p"></p>
+        <button id="model_persist_highlight">Model_Persist_Highlight</button>
+        <p id="model_persist_highlight_p"></p>
+        <button id="model_persist_highlight_reset">Model_Persist_Highlight_Reset</button>
+        <p id="model_persist_highlight_reset_p"></p>
+        <button id="building_cull">BLDG_Cull</button>
+        <p id="building_cull_p"></p>
+        <button id="area_plane">Area_Plane</button>
+        <p id="area_plane_p"></p>
+        <button id="area_plane_cancel">Area_Plane_Cancel</button>
+        <p id="area_plane_cancel_p"></p>
+        <button id="highlight_plane_color">Area_Plane_Highlight</button>
+        <p id="area_plane_highlight_p"></p> -->
+
+        <button id="btnReset" onclick="reset()">回归主视图</button>
+        <p>
+		<button id="test116">116高亮两个</button>
+		</p>        
+        <p>
+		<button id="clean116">116高亮清除</button>
+		</p>		
+        <p>
+		<button id="test116A">116高亮A</button>
+		</p>
+		<p>
+		<button id="test116B">116高亮B</button>
+		</p>
+    </div>
+
+    <canvas height="720" width="1280" id="showcanvas"> </canvas>
+
+
+    <div id="Navmap" class="Navmap" style="display:none; background:url(D://Home/Workspace/cbim_repos/cbimraas_new/data/save/views/NavMap.jpg) center;background-size:100%;">
+        <button style="position:absolute; top:1%;right:1%" onclick="hideNavmap()">X</button>
+        <svg height="300" width="300" xmlns="http://www.w3.org/2000/svg" version="1.1">
+			<polygon id="navigationpolygon" points="150,135 144,144 156,144"
+				style="fill:lime;stroke:purple;stroke-width:1" />
+			<circle id="navigationCircle" cx="150" cy="150" r="6" stroke="black" stroke-width="1" opacity="1"
+				fill="#11DAB7"></circle>
+		</svg>
+    </div>
+</body>
+
+<script src="js/websocket.js"></script>
+<script src="js/global_vars.js"></script>
+<script src="js/basic_functions.js"></script>
+<script src="js/basic_buttons.js"></script>
+<script src="js/window_ops.js"></script>
+<script src="js/canvas_ops.js"></script>
+<!-- <script src="js/custom_buttons.js"></script> -->
+<!-- <script src="js/mixed_highlight.js"></script> -->
+<script src="js/navigation_map.js"></script>
+<script src="js/backline.js"></script>
+<script>
+	//20201215,116,1只有1个uuid会高亮，多个uuid后面的都丢弃了。 116，0，目前没有效果。
+	document.getElementById("test116").onclick = function(e) {
+		console.log("test116")
+		data.type = 116;
+        data.extraType = 1;
+        data.uuid = "cec557b0-0c2a-4b54-b7f8-5d6e021d5c4e-00124897;cec557b0-0c2a-4b54-b7f8-5d6e021d5c4e-00124951";
+		ws1.send(code(data));
+	}
+	document.getElementById("clean116").onclick = function(e) {
+		console.log("clean116")
+		data.type = 116;
+        data.extraType = 0;
+        data.uuid = "";
+		ws1.send(code(data));
+	}
+	document.getElementById("test116A").onclick = function(e) {
+		console.log("test116A")
+		data.type = 116;
+        data.extraType = 1;
+        data.uuid = "cec557b0-0c2a-4b54-b7f8-5d6e021d5c4e-00124897";
+		ws1.send(code(data));
+	}
+	document.getElementById("test116B").onclick = function(e) {
+		console.log("test116B")
+		data.type = 116;
+        data.extraType = 1;
+        data.uuid = "cec557b0-0c2a-4b54-b7f8-5d6e021d5c4e-00124951";
+		ws1.send(code(data));
+	}
+</script>
+
+</html>

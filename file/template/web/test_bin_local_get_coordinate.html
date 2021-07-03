@@ -1,0 +1,65 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="test_bin.css">
+</head>
+
+<body>
+    <div class="layout">
+        <button id="btnReset" onclick="reset()">回归主视图</button>
+		<p></p>
+		<button id="getAllCoordinate" >获得整个BBox坐标</button>
+		<p></p>
+		<button id="getOneModelCoordinate">获取一个模型的BBox坐标</button>
+		<p></p>
+		<button id="getOneMeshCoordinate">获取一个构件的BBox坐标</button>
+		<p></p>
+    </div>
+
+    <canvas height="720" width="1280" id="showcanvas"> </canvas>
+	<canvas style="display:none;" id="navmap" width="480" height="480"></canvas>
+
+
+    <div id="Navmap" class="Navmap" style="display:none">
+        <button style="position:absolute; top:1%;right:1%" onclick="hideNavmap()">X</button>
+        <svg height="480" width="480" xmlns="http://www.w3.org/2000/svg" version="1.1">
+			<polygon id="navigationpolygon" points="150,135 144,144 156,144"
+				style="fill:lime;stroke:purple;stroke-width:1" />
+			<circle id="navigationCircle" cx="150" cy="150" r="6" stroke="black" stroke-width="1" opacity="1"
+				fill="#11DAB7"></circle>
+		</svg>
+    </div>
+</body>
+
+<script src="js/websocket.js"></script>
+<script src="js/global_vars.js"></script>
+<script src="js/basic_functions.js"></script>
+<script src="js/basic_buttons.js"></script>
+<script src="js/window_ops.js"></script>
+<script src="js/canvas_ops.js"></script>
+<script src="js/navigation_map.js"></script>
+
+<script>
+	document.getElementById("getAllCoordinate").onclick = function(e) {
+		console.log("getAllCoordinate")
+		data.type = 1036;
+		data.uuid = '1;1;0;all';
+		ws1.send(code(data));
+	}
+	document.getElementById("getOneModelCoordinate").onclick = function(e) {
+		console.log("getOneModelCoordinate")
+		data.type = 1036;
+		data.uuid = '1;1;0;417404209104241977';
+		ws1.send(code(data));
+	}
+	document.getElementById("getOneMeshCoordinate").onclick = function(e) {
+		console.log("getOneMeshCoordinate")
+		data.type = 1036;
+		data.uuid = '1;1;0;'+selected_uuid;;
+		ws1.send(code(data));
+	}
+</script>
+</html>

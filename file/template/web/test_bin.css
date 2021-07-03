@@ -1,0 +1,30 @@
+body {
+    padding: 0;
+    margin: 0;
+}
+
+.layout {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 200px;
+    height: 700px;
+    /* border: 1px green solid; */
+}
+
+div.Navmap {
+    display: none;
+    position: fixed;
+    bottom: 1%;
+    right: 1%;
+    width: 480px;
+    height: 480px;
+    border: 1px solid black;
+    background-color: white;
+    z-index: 1002
+}
+
+iframe[seamless] {
+    border: none;
+    height: 50px;
+}

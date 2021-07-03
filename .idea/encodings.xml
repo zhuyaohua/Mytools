@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/file/template/web/js/backline.js" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/tool/2724_XF-A_B-1-1.json" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/tool/Es_result.json" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/tool/cadresult.json" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/tool/itemlevel.json" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/tool/ocr.txt" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/tool/resultfile/1000954-Es_result_check.json" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/tool/resultfile/1000964-Es_result_check.json" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/tool/resultfile/1000986-Es_result_check.json" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/tool/resultfile/1001221Es_result_audit.json" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/tool/resultfile/1001221Es_result_audit1.json" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/tool/resultfile/1001268Es_result_audit.json" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/tool/resultfile/1001351Es_result_audit.json" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/tool/resultfile/1001451Es_result_audit.json" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/tool/resultfile/Es_no_match_data-old.json" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/tool/resultfile/Es_no_match_data.json" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/tool/resultfile/Es_result_audit.json" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/tool/resultfile/Es_result_check.json" charset="GBK" />
+  </component>
+</project>

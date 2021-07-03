@@ -1,0 +1,31 @@
+Test:
+  ticket:
+    uri: "/external/api/user/request_encryption_ticket" #用来加密生成sign的uri，当前访问的uri
+    appkey: "b774cfe9fc8776b961a650df3efb2b8d"
+    appid: "7bf66c041b2b28c734c3e5b7534cbb9c"
+    ticketdata : '{"ticketData":"y9V9CTXKPuhGIM42JzGZWOqchiuyHF+oTi30qms4wrWMpaeWIFL0pm4BaA8AoyD5E2j1XpPlRxueXSg+a5ET0A=="}'
+  environ:
+    cas: "https://devdes.cbim.org.cn/external/api/user/request_encryption_ticket"#通过调用cas换取tk.tool
+    uri: "https://test-doctool.cbim.org.cn/" #测试环境的uri
+
+Dev:
+  ticket:
+    uri: "/external/api/user/request_encryption_ticket" #用来加密生成sign的uri，当前访问的uri
+    appkey: "b774cfe9fc8776b961a650df3efb2b8d"
+    appid: "7bf66c041b2b28c734c3e5b7534cbb9c"
+    ticketdata : '{"ticketData":"y9V9CTXKPuhGIM42JzGZWOqchiuyHF+oTi30qms4wrWMpaeWIFL0pm4BaA8AoyD5E2j1XpPlRxueXSg+a5ET0A=="}'
+  environ:
+    cas: "https://devwork.cbim.org.cn/external/api/user/request_encryption_ticket"
+    uri: "https://dev-doctool.cbim.org.cn/"
+    uri_delivery: "https://deliverydev.cbim.org.cn:8004"
+    design: "https://devwork.cbim.org.cn"
+
+Dms:
+  ticket:
+    uri: "/external/api/user/request_encryption_ticket" #用来加密生成sign的uri，当前访问的uri
+    appkey: "515a2e95179d603d7d82a68102c58ff2"
+    appid: "43be49a510d8221efbb2d63d579aab15"
+    ticketdata : '{"y9V9CTXKPuhGIM42JzGZWOqchiuyHF+oTi30qms4wrWMpaeWIFL0pm4BaA8AoyD5E2j1XpPlRxueXSg+a5ET0A=="}'
+  environ:
+    cas: "https://cctc-cfg.cbim.org.cn/external/api/user/request_encryption_ticket"#通过调用cas换取tk.tool
+    uri: "https://cctc-doctool.cbim.org.cn/" #dms环境的uri

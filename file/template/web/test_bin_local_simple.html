@@ -1,0 +1,89 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="test_bin.css">
+</head>
+
+<body>
+    <div class="layout">
+        <!-- <button id="area_highlight">Area_Highlight</button>
+        <p id="area_highlight_p"></p>
+        <button id="building_highlight">BLDG_Highlight</button>
+        <p id="building_highlight_p"></p>
+        <button id="mixed_highlight">Mixed_Highlight</button>
+        <p id="mixed_highlight_p"></p>
+
+        <button id="set_cam_level">Set_Cam_Level</button>
+        <p id="set_cam_level_p"></p>
+        <button id="model_highlight">Model_Highlight</button>
+        <p id="model_highlight_p"></p>
+        <button id="model_persist_highlight">Model_Persist_Highlight</button>
+        <p id="model_persist_highlight_p"></p>
+        <button id="model_persist_highlight_reset">Model_Persist_Highlight_Reset</button>
+        <p id="model_persist_highlight_reset_p"></p>
+        <button id="building_cull">BLDG_Cull</button>
+        <p id="building_cull_p"></p>
+        <button id="area_plane">Area_Plane</button>
+        <p id="area_plane_p"></p>
+        <button id="area_plane_cancel">Area_Plane_Cancel</button>
+        <p id="area_plane_cancel_p"></p>
+        <button id="highlight_plane_color">Area_Plane_Highlight</button>
+        <p id="area_plane_highlight_p"></p> -->
+
+        <button id="btnReset" onclick="reset()">回归主视图</button>
+        <p></p>
+        <button id="checkAllResultsNoDisplay">检查并返回所有结果</button>
+        <p></p>
+        <button id="showAllHeights">显示所有高度</button>
+        <p></p>
+        <button id="highlightSingleHeight">高亮单个限高</button>
+        <p></p>
+        <button id="showAllGreenLine">显示所有绿线</button>
+        <p></p>
+        <button id="showSingleGreenLine">高亮单个绿线</button>
+        <p></p>
+        <button id="showAllBlueLine">显示所有蓝线</button>
+        <p></p>
+        <button id="showSingleBlueLine">高亮单个蓝线</button>
+        <p></p>
+        <button id="showRedLine">显示所有红线</button>
+        <p></p>
+
+
+        <p></p>
+        <button hidden id="planform">导航图</button>
+        <button hidden id="batSwitch">批量选择关</button>
+        <button hidden id="renderCullBox">显示剖切盒</button>
+        <button hidden id="selectmark">重置剖切盒</button>
+        <button hidden id="selectmark_debug">重置剖切盒_debug</button>
+    </div>
+
+    <canvas height="720" width="1280" id="showcanvas"> </canvas>
+
+
+    <div id="Navmap" class="Navmap" style="display:none; background:url(D://Home/Workspace/cbim_repos/cbimraas_new/data/save/views/NavMap.jpg) center;background-size:100%;">
+        <button style="position:absolute; top:1%;right:1%" onclick="hideNavmap()">X</button>
+        <svg height="300" width="300" xmlns="http://www.w3.org/2000/svg" version="1.1">
+			<polygon id="navigationpolygon" points="150,135 144,144 156,144"
+				style="fill:lime;stroke:purple;stroke-width:1" />
+			<circle id="navigationCircle" cx="150" cy="150" r="6" stroke="black" stroke-width="1" opacity="1"
+				fill="#11DAB7"></circle>
+		</svg>
+    </div>
+</body>
+
+<script src="js/websocket.js"></script>
+<script src="js/global_vars.js"></script>
+<script src="js/basic_functions.js"></script>
+<script src="js/basic_buttons.js"></script>
+<script src="js/window_ops.js"></script>
+<script src="js/canvas_ops.js"></script>
+<!-- <script src="js/custom_buttons.js"></script> -->
+<!-- <script src="js/mixed_highlight.js"></script> -->
+<script src="js/navigation_map.js"></script>
+<script src="js/backline.js"></script>
+
+</html>

@@ -1,0 +1,102 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<!-- 测试端点类型捕捉 91/0,dx -->
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="test_bin.css">
+</head>
+
+<body>
+    <div class="layout">
+		<button id="show" style="background-color:#666666; display:none;"> show </button>
+		<button id="hide" style="background-color:#666666; display:none;"> hide </button>
+		<button id="planform" style="background-color:#666666; display:none;"> planform </button>
+		<button id="nav_SetBuildNumber" style="background-color:#666666; display:none;"> nav_SetBuildNumber </button>
+		<button id="nav_SetFloorHeight" style="background-color:#666666; display:none;"> nav_SetFloorHeight </button>
+		<button id="Navmap" style="background-color:#666666; display:none;"> Navmap </button>
+		<button id="nav_FirstPersonView" style="background-color:#666666; display:none;"> nav_FirstPersonView </button>
+		
+        <button id="btnReset" onclick="reset()">回归主视图</button>
+		<p>
+		<button id="openGetNearPoint">开始捕捉</button>
+		</p>
+        <p>
+		<button id="closeGetNearPoint">关闭捕捉</button>
+		</p>
+		<p>
+		<button id="setGet_1">捕捉端点</button>
+		</p>
+		<p>
+		<button id="setGet_2">捕捉中点</button>
+		</p>
+		<p>
+		<button id="setGet_3">捕捉垂足</button>
+		</p>
+		<p>
+		<button id="setGet_4">捕捉所有</button>
+		</p>
+    </div>
+
+    <canvas height="720" width="1280" id="showcanvas"> </canvas>
+
+
+    <div id="Navmap" class="Navmap" style="display:none; background:url(D://Home/Workspace/cbim_repos/cbimraas_new/data/save/views/NavMap.jpg) center;background-size:100%;">
+        <button style="position:absolute; top:1%;right:1%" onclick="hideNavmap()">X</button>
+        <svg height="300" width="300" xmlns="http://www.w3.org/2000/svg" version="1.1">
+			<polygon id="navigationpolygon" points="150,135 144,144 156,144"
+				style="fill:lime;stroke:purple;stroke-width:1" />
+			<circle id="navigationCircle" cx="150" cy="150" r="6" stroke="black" stroke-width="1" opacity="1"
+				fill="#11DAB7"></circle>
+		</svg>
+    </div>
+</body>
+
+<script src="js/websocket.js"></script>
+<script src="js/global_vars.js"></script>
+<script src="js/basic_functions.js"></script>
+<script src="js/basic_buttons.js"></script>
+<script src="js/window_ops.js"></script>
+<script src="js/canvas_ops.js"></script>
+<script src="js/navigation_map.js"></script>
+
+<script>
+	
+	document.getElementById("openGetNearPoint").onclick = function(e) {
+		console.log("openGetNearPoint")
+		catchNearPoint = true;
+		data.type = 91;
+		data.extraType = 3;
+		ws1.send(code(data));
+		measuring = true;
+	}
+
+	document.getElementById("closeGetNearPoint").onclick = function(e) {
+		console.log("closeGetNearPoint")
+		catchNearPoint = false;
+		data.type = 91;
+		data.extraType = 5;
+		ws1.send(code(data));
+		measuring = false;
+	}
+	document.getElementById("setGet_1").onclick = function(e) {
+		console.log("setGet_1")
+		catchNearPointType = 1;
+	}
+	document.getElementById("setGet_2").onclick = function(e) {
+		console.log("setGet_2")
+		catchNearPointType = 2;
+	}
+	document.getElementById("setGet_3").onclick = function(e) {
+		console.log("setGet_3")
+		catchNearPointType = 3;
+	}
+	document.getElementById("setGet_4").onclick = function(e) {
+		console.log("setGet_4")
+		catchNearPointType = 4;
+	}
+
+	
+</script>
+
+</html>

@@ -1,0 +1,72 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="test_bin.css">
+</head>
+
+<body>
+    <div class="layout">
+		<button id="show" style="background-color:#666666; display:none;"> show </button>
+		<button id="hide" style="background-color:#666666; display:none;"> hide </button>
+		<button id="planform" style="background-color:#666666; display:none;"> planform </button>
+		<button id="nav_SetBuildNumber" style="background-color:#666666; display:none;"> nav_SetBuildNumber </button>
+		<button id="nav_SetFloorHeight" style="background-color:#666666; display:none;"> nav_SetFloorHeight </button>
+		<button id="Navmap" style="background-color:#666666; display:none;"> Navmap </button>
+		<button id="nav_FirstPersonView" style="background-color:#666666; display:none;"> nav_FirstPersonView </button>
+		
+        <button id="btnReset" onclick="reset()">回归主视图</button>
+		<p>
+		<button id="test1066_drawLandBoundary">test1066_drawLandBoundary</button>
+		</p>
+		<p>
+		<button id="1066_resetAll">1066_重置</button>
+		</p>
+		
+    </div>
+
+    <canvas height="720" width="1280" id="showcanvas"> </canvas>
+
+
+    <div id="Navmap" class="Navmap" style="display:none; background:url(D://Home/Workspace/cbim_repos/cbimraas_new/data/save/views/NavMap.jpg) center;background-size:100%;">
+        <button style="position:absolute; top:1%;right:1%" onclick="hideNavmap()">X</button>
+        <svg height="300" width="300" xmlns="http://www.w3.org/2000/svg" version="1.1">
+			<polygon id="navigationpolygon" points="150,135 144,144 156,144"
+				style="fill:lime;stroke:purple;stroke-width:1" />
+			<circle id="navigationCircle" cx="150" cy="150" r="6" stroke="black" stroke-width="1" opacity="1"
+				fill="#11DAB7"></circle>
+		</svg>
+    </div>
+</body>
+
+<script src="js/websocket.js"></script>
+<script src="js/global_vars.js"></script>
+<script src="js/basic_functions.js"></script>
+<script src="js/basic_buttons.js"></script>
+<script src="js/window_ops.js"></script>
+<script src="js/canvas_ops.js"></script>
+<script src="js/navigation_map.js"></script>
+
+<script>
+	
+	//测试模型：场地-20201230.cim
+	//只显示一个建筑
+	document.getElementById("test1066_drawLandBoundary").onclick = function(e) {
+		console.log("test1066_drawLandBoundary")
+		data.type = 1066;
+        data.uuid = '{"ldArr":[{"objects":["cec557b0-0c2a-4b54-b7f8-5d6e021d5c4e-00124897","cec557b0-0c2a-4b54-b7f8-5d6e021d5c4e-00124951","cec557b0-0c2a-4b54-b7f8-5d6e021d5c4e-00124982"],"type":"drawLandBoundary"}]}';
+		ws1.send(code(data));
+	}
+
+	document.getElementById("1066_resetAll").onclick = function(e) {
+		console.log("1066_resetAll")
+		data.type = 1066;
+        data.uuid = '{"ldArr":[{"type":"resetAll"}]}';
+		ws1.send(code(data));
+	}
+
+</script>
+
+</html>

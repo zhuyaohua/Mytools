@@ -1,0 +1,103 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="test_bin.css">
+</head>
+
+<body>
+    <div class="layout">
+        <button id="btnReset" onclick="reset()">回归主视图</button>
+		<p></p>
+		<button id="setTransparent" >地面显示透明</button>
+		<p></p>
+		<button id="disableSelect">不能选中地面</button>
+		<p></p>
+		<button id="reSelect">可以选中地面</button>
+		<p></p>
+		<button id="hideCovering" >覆土层隐藏</button>
+		<p></p>
+		<button id="showCovering" >覆土层显示</button>
+		<p></p>
+		<p>覆土深度：
+		<input id="OverlyingSoilHeight">
+		<button id="hightlightOverlyingSoil">覆土层高亮</button>
+		</p>
+		<p></p>
+		<button id="cleanHightlightOverlyingSoil">清除覆土层高亮</button>
+		<p></p>
+    </div>
+
+    <canvas height="720" width="1280" id="showcanvas"> </canvas>
+	<canvas style="display:none;" id="navmap" width="480" height="480"></canvas>
+
+
+    <div id="Navmap" class="Navmap" style="display:none">
+        <button style="position:absolute; top:1%;right:1%" onclick="hideNavmap()">X</button>
+        <svg height="480" width="480" xmlns="http://www.w3.org/2000/svg" version="1.1">
+			<polygon id="navigationpolygon" points="150,135 144,144 156,144"
+				style="fill:lime;stroke:purple;stroke-width:1" />
+			<circle id="navigationCircle" cx="150" cy="150" r="6" stroke="black" stroke-width="1" opacity="1"
+				fill="#11DAB7"></circle>
+		</svg>
+    </div>
+</body>
+
+<script src="js/websocket.js"></script>
+<script src="js/global_vars.js"></script>
+<script src="js/basic_functions.js"></script>
+<script src="js/basic_buttons.js"></script>
+<script src="js/window_ops.js"></script>
+<script src="js/canvas_ops.js"></script>
+<script src="js/navigation_map.js"></script>
+
+<script>
+	document.getElementById("setTransparent").onclick = function(e) {
+		console.log("setTransparent")
+		data.type = 1032;
+		data.uuid = '1;1;1;OST_Topography;0.1';
+		ws1.send(code(data));
+	}
+	document.getElementById("disableSelect").onclick = function(e) {
+		console.log("disableSelect")
+		data.type = 1033;
+		data.uuid = '1;1;0;OST_Topography';
+		ws1.send(code(data));
+	}
+	document.getElementById("reSelect").onclick = function(e) {
+		console.log("reSelect")
+		data.type = 1033;
+		data.uuid = '2;1;0;OST_Topography';
+		ws1.send(code(data));
+	}
+	document.getElementById("hideCovering").onclick = function(e) {
+		console.log("hideCovering")
+		data.type = 1032;
+		data.uuid = '2;1;2;OST_Mass;0;0.5';
+		ws1.send(code(data));
+	}
+	document.getElementById("showCovering").onclick = function(e) {
+		console.log("showCovering")
+		data.type = 1032;
+		data.uuid = '2;1;2;OST_Mass;1;0.5';
+		ws1.send(code(data));
+	}
+	document.getElementById("hightlightOverlyingSoil").onclick = function(e) {
+		console.log("hightlightOverlyingSoil")
+		var height = document.getElementById("OverlyingSoilHeight").value;
+		data.type = 1040;
+		data.uuid = '1;1;4;1237167796207482887;OST_Mass;0.5;' + height + ';0.1';
+		ws1.send(code(data));
+		two_mesh_dist = false;
+	}
+	document.getElementById("cleanHightlightOverlyingSoil").onclick = function(e) {
+		console.log("cleanHightlightOverlyingSoil")
+		data.type = 1040;
+		data.uuid = '0;0;0';
+		ws1.send(code(data));
+		two_mesh_dist = false;
+	}
+</script>
+</html>

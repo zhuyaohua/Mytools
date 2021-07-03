@@ -1,0 +1,183 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="test_bin.css">
+</head>
+
+<body>
+    <div class="layout">
+		<button id="show" style="background-color:#666666; display:none;"> show </button>
+		<button id="hide" style="background-color:#666666; display:none;"> hide </button>
+		<button id="planform" style="background-color:#666666; display:none;"> planform </button>
+		<button id="nav_SetBuildNumber" style="background-color:#666666; display:none;"> nav_SetBuildNumber </button>
+		<button id="nav_SetFloorHeight" style="background-color:#666666; display:none;"> nav_SetFloorHeight </button>
+		<button id="Navmap" style="background-color:#666666; display:none;"> Navmap </button>
+		<button id="nav_FirstPersonView" style="background-color:#666666; display:none;"> nav_FirstPersonView </button>
+		
+        <button id="btnReset" onclick="reset()">回归主视图</button>
+		<p>
+		<button id="test_2_0">重置剖切盒</button>
+		</p>
+        <p>
+		<button id="test_46_0">关闭剖切盒</button>
+		</p>
+        <p>
+		<button id="test_46_1">显示剖切盒</button>
+		</p>
+		<button id="test_2_0_x">修改x轴</button>
+		<button id="test_2_0_y">修改y轴</button>
+		<button id="test_2_0_z">修改z轴</button>
+		
+		<p>
+		<button id="test_46_2">关闭包围盒</button>
+		</p>
+		<p>
+		<button id="test_46_3">显示包围盒</button>
+		</p>
+		
+    </div>
+
+    <canvas height="720" width="1280" id="showcanvas"> </canvas>
+
+
+    <div id="Navmap" class="Navmap" style="display:none; background:url(D://Home/Workspace/cbim_repos/cbimraas_new/data/save/views/NavMap.jpg) center;background-size:100%;">
+        <button style="position:absolute; top:1%;right:1%" onclick="hideNavmap()">X</button>
+        <svg height="300" width="300" xmlns="http://www.w3.org/2000/svg" version="1.1">
+			<polygon id="navigationpolygon" points="150,135 144,144 156,144"
+				style="fill:lime;stroke:purple;stroke-width:1" />
+			<circle id="navigationCircle" cx="150" cy="150" r="6" stroke="black" stroke-width="1" opacity="1"
+				fill="#11DAB7"></circle>
+		</svg>
+    </div>
+</body>
+
+<script src="js/websocket.js"></script>
+<script src="js/global_vars.js"></script>
+<script src="js/basic_functions.js"></script>
+<script src="js/basic_buttons.js"></script>
+<script src="js/window_ops.js"></script>
+<script src="js/canvas_ops.js"></script>
+<script src="js/navigation_map.js"></script>
+
+<script>
+	
+	document.getElementById("test_46_0").onclick = function(e) {
+		console.log("test_46_0")
+		data.type = 46;
+        data.extraType = 0;
+        data.uuid = '';
+		ws1.send(code(data));
+		cullbox = false;
+		data.type = 2;
+        data.extraType = -1;
+		ws1.send(code(data));
+		cullbox = false;
+	}
+
+	document.getElementById("test_46_1").onclick = function(e) {
+		console.log("test_46_1")
+		data.type = 46;
+        data.extraType = 1;
+        data.uuid = '';
+		ws1.send(code(data));
+		cullbox = true;
+	}
+	//重置剖切盒，2/0,an:-1,-1,-1,as:1,1,1.
+	document.getElementById("test_2_0").onclick = function(e) {
+		console.log("test_2_0_x")
+		data.type = 2;
+        data.extraType = 0;
+		data.dx = 0;
+		data.dy = 0;
+		data.posx = 0;
+		data.posy = 0;
+		data.asx = 1;
+		data.anx = -1;
+		data.asy = 1;
+		data.any = -1;
+		data.asz = 1;
+		data.anz = -1;
+        data.uuid = '';
+		ws1.send(code(data));
+		cullbox = true;
+	}
+		
+	document.getElementById("test_2_0_x").onclick = function(e) {
+		console.log("test_2_0_x")
+		data.type = 2;
+        data.extraType = 0;
+		data.dx = 0;
+		data.dy = 0;
+		data.posx = 0;
+		data.posy = 0;
+		data.asx = 0.5;
+		data.anx = -0.5;
+		data.asy = 1;
+		data.any = -1;
+		data.asz = 1;
+		data.anz = -1;
+        data.uuid = '';
+		ws1.send(code(data));
+		cullbox = true;
+	}
+	document.getElementById("test_2_0_y").onclick = function(e) {
+		console.log("test_2_0_y")
+		data.type = 2;
+        data.extraType = 0;
+		data.dx = 0;
+		data.dy = 0;
+		data.posx = 0;
+		data.posy = 0;
+		data.asx = 1;
+		data.anx = -1;
+		data.asy = 0.5;
+		data.any = -0.5;
+		data.asz = 1;
+		data.anz = -1;
+        data.uuid = '';
+		ws1.send(code(data));
+		cullbox = true;
+	}
+	document.getElementById("test_2_0_z").onclick = function(e) {
+		console.log("test_2_0_z")
+		data.type = 2;
+        data.extraType = 0;
+		data.dx = 0;
+		data.dy = 0;
+		data.posx = 0;
+		data.posy = 0;
+		data.asx = 1;
+		data.anx = -1;
+		data.asy = 1;
+		data.any = -1;
+		data.asz = 0.5;
+		data.anz = -0.5;
+        data.uuid = '';
+		ws1.send(code(data));
+		cullbox = true;
+	}
+	
+	document.getElementById("test_46_2").onclick = function(e) {
+		console.log("test_46_2")
+		data.type = 46;
+        data.extraType = 2;
+        data.uuid = '';
+		ws1.send(code(data));
+	}
+	document.getElementById("test_46_3").onclick = function(e) {
+		console.log("test_46_3")
+		data.type = 46;
+        data.extraType = 3;
+        data.uuid = '';
+		ws1.send(code(data));
+	}
+
+	//site1125.cim
+
+	
+</script>
+
+</html>

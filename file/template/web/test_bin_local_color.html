@@ -1,0 +1,195 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="test_bin.css">
+</head>
+
+<body>
+    <div class="layout">
+        <!-- <button id="area_highlight">Area_Highlight</button>
+        <p id="area_highlight_p"></p>
+        <button id="building_highlight">BLDG_Highlight</button>
+        <p id="building_highlight_p"></p>
+        <button id="mixed_highlight">Mixed_Highlight</button>
+        <p id="mixed_highlight_p"></p>
+
+        <button id="set_cam_level">Set_Cam_Level</button>
+        <p id="set_cam_level_p"></p>
+        <button id="model_highlight">Model_Highlight</button>
+        <p id="model_highlight_p"></p>
+        <button id="model_persist_highlight">Model_Persist_Highlight</button>
+        <p id="model_persist_highlight_p"></p>
+        <button id="model_persist_highlight_reset">Model_Persist_Highlight_Reset</button>
+        <p id="model_persist_highlight_reset_p"></p>
+        <button id="building_cull">BLDG_Cull</button>
+        <p id="building_cull_p"></p>
+        <button id="area_plane">Area_Plane</button>
+        <p id="area_plane_p"></p>
+        <button id="area_plane_cancel">Area_Plane_Cancel</button>
+        <p id="area_plane_cancel_p"></p>
+        <button id="highlight_plane_color">Area_Plane_Highlight</button>
+        <p id="area_plane_highlight_p"></p> -->
+
+        <button id="btnReset" onclick="reset()">回归主视图</button>
+        <p>
+        <button id="color_default">默认配色</button>
+        </p>
+        <p>
+        <button id="color_01">配色01</button>
+        </p>
+        <p>
+        <button id="color_02">配色02</button>
+        </p>
+        <p>
+        <button id="color_03">配色03</button>
+        </p>
+        <p>
+        <button id="render_mode_0">纯色</button>
+        </p>        
+        <p>
+        <button id="render_mode_1">纯色+线框</button>
+        </p>
+        <p>
+        <button id="render_mode_2">半透明</button>
+        </p>
+        <p>
+        <button id="render_mode_3">半透明+线框</button>
+        </p>
+        <p>
+        <button id="render_mode_4">线框+白模</button>
+        </p>
+        <p>
+        <button id="render_mode_5">材质</button>
+        </p>
+        <p>
+        <button id="render_mode_6">材质+线框</button>
+        </p>
+        <p>
+        <button id="render_mode_7">纯线框</button>
+        </p>
+    </div>
+
+    <canvas height="720" width="1280" id="showcanvas"> </canvas>
+
+
+    <div id="Navmap" class="Navmap" style="display:none; background:url(D://Home/Workspace/cbim_repos/cbimraas_new/data/save/views/NavMap.jpg) center;background-size:100%;">
+        <button style="position:absolute; top:1%;right:1%" onclick="hideNavmap()">X</button>
+        <svg height="300" width="300" xmlns="http://www.w3.org/2000/svg" version="1.1">
+			<polygon id="navigationpolygon" points="150,135 144,144 156,144"
+				style="fill:lime;stroke:purple;stroke-width:1" />
+			<circle id="navigationCircle" cx="150" cy="150" r="6" stroke="black" stroke-width="1" opacity="1"
+				fill="#11DAB7"></circle>
+		</svg>
+    </div>
+</body>
+
+<script src="js/websocket.js"></script>
+<script src="js/global_vars.js"></script>
+<script src="js/basic_functions.js"></script>
+<script src="js/basic_buttons.js"></script>
+<script src="js/window_ops.js"></script>
+<script src="js/canvas_ops.js"></script>
+
+<script>
+        document.getElementById("color_default").onclick = function(e) {
+                console.log("color_default")
+                data.type = 51;
+                data.extraType = 0;
+                ws1.send(code(data));
+                data.type = 101;
+                data.extraType = 0;
+                ws1.send(code(data));
+                data.type = 87;
+                data.extraType = 0;
+                ws1.send(code(data));
+        }
+        document.getElementById("color_01").onclick = function(e) {
+                console.log("color_01")
+                data.type = 51;
+                data.extraType = 0;
+                ws1.send(code(data));
+                data.type = 101;
+                data.extraType = 1;
+                ws1.send(code(data));
+                data.type = 87;
+                data.extraType = 0;
+                ws1.send(code(data));
+        }
+        document.getElementById("color_02").onclick = function(e) {
+                console.log("color_02")
+                data.type = 51;
+                data.extraType = 0;
+                ws1.send(code(data));
+                data.type = 101;
+                data.extraType = 2;
+                ws1.send(code(data));
+                data.type = 87;
+                data.extraType = 0;
+                ws1.send(code(data));
+        }
+        document.getElementById("color_03").onclick = function(e) {
+                console.log("color_03")
+                data.type = 51;
+                data.extraType = 0;
+                ws1.send(code(data));
+                data.type = 101;
+                data.extraType = 3;
+                ws1.send(code(data));
+                data.type = 87;
+                data.extraType = 0;
+                ws1.send(code(data));
+        }
+        
+        document.getElementById("render_mode_0").onclick = function(e) {
+                console.log("render_mode_0")
+                data.type = 51;
+                data.extraType = 0;
+                ws1.send(code(data));
+        }
+        document.getElementById("render_mode_1").onclick = function(e) {
+                console.log("render_mode_1")
+                data.type = 51;
+                data.extraType = 1;
+                ws1.send(code(data));
+        }
+        document.getElementById("render_mode_2").onclick = function(e) {
+                console.log("render_mode_2")
+                data.type = 51;
+                data.extraType = 2;
+                ws1.send(code(data));
+        }
+        document.getElementById("render_mode_3").onclick = function(e) {
+                console.log("render_mode_3")
+                data.type = 51;
+                data.extraType = 3;
+                ws1.send(code(data));
+        }
+        document.getElementById("render_mode_4").onclick = function(e) {
+                console.log("render_mode_4")
+                data.type = 51;
+                data.extraType = 4;
+                ws1.send(code(data));
+        }
+        document.getElementById("render_mode_5").onclick = function(e) {
+                console.log("render_mode_5")
+                data.type = 51;
+                data.extraType = 5;
+                ws1.send(code(data));
+        }
+        document.getElementById("render_mode_6").onclick = function(e) {
+                console.log("render_mode_6")
+                data.type = 51;
+                data.extraType = 6;
+                ws1.send(code(data));
+        }
+        document.getElementById("render_mode_7").onclick = function(e) {
+                console.log("render_mode_7")
+                data.type = 51;
+                data.extraType = 7;
+                ws1.send(code(data));
+        }
+</script>
+</html>

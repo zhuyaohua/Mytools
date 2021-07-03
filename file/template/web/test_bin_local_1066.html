@@ -1,0 +1,271 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="test_bin.css">
+</head>
+
+<body>
+    <div class="layout">
+		<button id="show" style="background-color:#666666; display:none;"> show </button>
+		<button id="hide" style="background-color:#666666; display:none;"> hide </button>
+		<button id="planform" style="background-color:#666666; display:none;"> planform </button>
+		<button id="nav_SetBuildNumber" style="background-color:#666666; display:none;"> nav_SetBuildNumber </button>
+		<button id="nav_SetFloorHeight" style="background-color:#666666; display:none;"> nav_SetFloorHeight </button>
+		<button id="Navmap" style="background-color:#666666; display:none;"> Navmap </button>
+		<button id="nav_FirstPersonView" style="background-color:#666666; display:none;"> nav_FirstPersonView </button>
+		
+        <button id="btnReset" onclick="reset()">回归主视图</button>
+        <p>
+		<button id="test1066_0">1066_reset</button>
+		</p>
+		<p>
+		<button id="test1066_1">1066_highlight</button>
+		</p>
+		
+		<p>
+		<button id="test1066_2">1066_flash</button>
+		</p>
+		<p>
+		<button id="test1066_3_1">1066_highlight_divide</button>
+		</p>
+		<p>
+		<button id="test1066_3_2">1066_flash_divide</button>
+		</p>
+		<p>
+		<button id="test1066_4_1">1066_highlight_location_1</button>
+		</p>
+		<p>
+		<button id="test1066_4_2">1066_highlight_location_2</button>
+		</p>
+		<p>
+		<button id="1066_highlight_area">1066_高亮面积</button>
+		</p>
+		<p>
+		<button id="1066_flash_area">1066_闪烁面积</button>
+		</p>
+		<p>
+		<button id="1066_highlight_area_two">1066_高亮两面积</button>
+		</p>
+		<p>
+		<button id="1066_highlight_area_two_diff_color">1066_高亮两个面积，不同色</button>
+		</p>
+		<p>
+		<button id="1066_highlight_buildNumber">1066_高亮buildNumber</button>
+		</p>
+		<p>
+		<button id="1066_highlight_box">1066_包围盒高亮</button>
+		</p>
+		<p>
+		<button id="1066_clean_all_area_and_line">1066_清除所有线和面积</button>
+		</p>
+		
+		<p>
+		<button id="1066_hide_all_hightlight">1066_隐藏其他仅显示一些构件</button>
+		</p>
+		
+    </div>
+
+    <canvas height="720" width="1280" id="showcanvas"> </canvas>
+
+
+    <div id="Navmap" class="Navmap" style="display:none; background:url(D://Home/Workspace/cbim_repos/cbimraas_new/data/save/views/NavMap.jpg) center;background-size:100%;">
+        <button style="position:absolute; top:1%;right:1%" onclick="hideNavmap()">X</button>
+        <svg height="300" width="300" xmlns="http://www.w3.org/2000/svg" version="1.1">
+			<polygon id="navigationpolygon" points="150,135 144,144 156,144"
+				style="fill:lime;stroke:purple;stroke-width:1" />
+			<circle id="navigationCircle" cx="150" cy="150" r="6" stroke="black" stroke-width="1" opacity="1"
+				fill="#11DAB7"></circle>
+		</svg>
+    </div>
+</body>
+
+<script src="js/websocket.js"></script>
+<script src="js/global_vars.js"></script>
+<script src="js/basic_functions.js"></script>
+<script src="js/basic_buttons.js"></script>
+<script src="js/window_ops.js"></script>
+<script src="js/canvas_ops.js"></script>
+<script src="js/navigation_map.js"></script>
+
+<script>
+//{
+//	"ldArr": [{
+//			"objects": ["27d491ba-cfe6-48a9-8a28-51b6079e44a3-000516e9"],
+//			"objectType": "m45",
+//			"type": "highlight",
+//			"highlightColor": "ff0000"
+//		},
+//		{
+//			"objects":[ "b7b6ff31-a44b-47ab-9ea0-f93f318332b7-0005174d",
+//			"b7b6ff31-a44b-47ab-9ea0-f93f318332b7-00051705",
+//			"b7b6ff31-a44b-47ab-9ea0-f93f318332b7-000516e3",
+//			"b7b6ff31-a44b-47ab-9ea0-f93f318332b7-00051789"
+//			],
+//			"objectType": "m45",
+//			"type": "highlight",
+//			"highlightColor": "00ff00"
+//		}
+//	]
+//}
+	document.getElementById("test1066_1").onclick = function(e) {
+		console.log("test1066_1")
+		data.type = 1066;
+        data.uuid = '{"ldArr":[{"objects":["27d491ba-cfe6-48a9-8a28-51b6079e44a3-000516e9"],"objectType":"m45","type":"highlight","highlightColor":"ff0000"},{"objects":["b7b6ff31-a44b-47ab-9ea0-f93f318332b7-0005174d","b7b6ff31-a44b-47ab-9ea0-f93f318332b7-00051705","b7b6ff31-a44b-47ab-9ea0-f93f318332b7-000516e3","b7b6ff31-a44b-47ab-9ea0-f93f318332b7-00051789"],"objectType":"m45","type":"highlight","highlightColor":"00ff00"}]}';
+		ws1.send(code(data));
+	}
+	
+//{
+//	"ldArr": [{
+//			"type": "resetColor"
+//		}
+//	]
+//}
+	
+	document.getElementById("test1066_0").onclick = function(e) {
+		console.log("test1066_0")
+		data.type = 1066;
+        data.uuid = '{"ldArr":[{"type":"resetColor"}]}';
+		ws1.send(code(data));
+	}
+	
+	
+//{
+//"ldArr":[
+//{
+//"objects":[
+//"27d491ba-cfe6-48a9-8a28-51b6079e44a3-000516e9"
+//],
+//"objectType":"m45",
+//"type":"flash",
+//"highlightColor":"ff0000",
+//"flashColor":"d9a95a",
+//"flashTime":"2"
+//},
+//{
+//"objects":[
+//"b7b6ff31-a44b-47ab-9ea0-f93f318332b7-0005174d",
+//"b7b6ff31-a44b-47ab-9ea0-f93f318332b7-00051705",
+//"b7b6ff31-a44b-47ab-9ea0-f93f318332b7-000516e3",
+//"b7b6ff31-a44b-47ab-9ea0-f93f318332b7-00051789"
+//],
+//"objectType":"m45",
+//"type":"flash",
+//"highlightColor":"00ff00",
+//"flashColor":"d9a95a",
+//"flashTime":"2"
+//}
+//]
+//}
+	document.getElementById("test1066_2").onclick = function(e) {
+		console.log("test1066_2")
+		data.type = 1066;
+        data.uuid = '{"ldArr":[{"objects":["27d491ba-cfe6-48a9-8a28-51b6079e44a3-000516e9"],"objectType":"m45","type":"flash","highlightColor":"ff0000","flashColor":"d9a95a","flashTime":"2"},{"objects":["b7b6ff31-a44b-47ab-9ea0-f93f318332b7-0005174d","b7b6ff31-a44b-47ab-9ea0-f93f318332b7-00051705","b7b6ff31-a44b-47ab-9ea0-f93f318332b7-000516e3","b7b6ff31-a44b-47ab-9ea0-f93f318332b7-00051789"],"objectType":"m45","type":"flash","highlightColor":"00ff00","flashColor":"d9a95a","flashTime":"2"}]}';
+		ws1.send(code(data));
+	}
+	
+	//隔离操作，就是先把所有模型搞半透明。
+//{
+//	"ldArr": [{
+//			"type": "divide",
+//			"opacity":"0.3"
+//		}
+//	]
+//}
+	//隔离高亮显示
+	document.getElementById("test1066_3_1").onclick = function(e) {
+		console.log("test1066_3_1")
+		data.type = 1066;
+        data.uuid = '{"ldArr":[{"type":"divide","opacity":"0.3"},{"objects":["27d491ba-cfe6-48a9-8a28-51b6079e44a3-000516e9"],"objectType":"m45","type":"highlight","highlightColor":"ff0000"},{"objects":["b7b6ff31-a44b-47ab-9ea0-f93f318332b7-0005174d","b7b6ff31-a44b-47ab-9ea0-f93f318332b7-00051705","b7b6ff31-a44b-47ab-9ea0-f93f318332b7-000516e3","b7b6ff31-a44b-47ab-9ea0-f93f318332b7-00051789"],"objectType":"m45","type":"highlight","highlightColor":"00ff00"}]}';
+		ws1.send(code(data));
+	}
+	//隔离闪烁显示
+	document.getElementById("test1066_3_2").onclick = function(e) {
+		console.log("test1066_3_2")
+		data.type = 1066;
+        data.uuid = '{"ldArr":[{"type":"divide","opacity":"0.3"},{"objects":["27d491ba-cfe6-48a9-8a28-51b6079e44a3-000516e9"],"objectType":"m45","type":"flash","highlightColor":"ff0000","flashColor":"d9a95a","flashTime":"2"},{"objects":["b7b6ff31-a44b-47ab-9ea0-f93f318332b7-0005174d","b7b6ff31-a44b-47ab-9ea0-f93f318332b7-00051705","b7b6ff31-a44b-47ab-9ea0-f93f318332b7-000516e3","b7b6ff31-a44b-47ab-9ea0-f93f318332b7-00051789"],"objectType":"m45","type":"flash","highlightColor":"00ff00","flashColor":"d9a95a","flashTime":"2"}]}';
+		ws1.send(code(data));
+	}
+//{
+//    "objects": [
+//        "27d491ba-cfe6-48a9-8a28-51b6079e44a3-000516e9"
+//    ],
+//    "objectType": "m45",
+//    "type": "location"
+//}
+	
+	//隔离高亮显示,定位到第一个。
+	document.getElementById("test1066_4_1").onclick = function(e) {
+		console.log("test1066_4_1")
+		data.type = 1066;
+        data.uuid = '{"ldArr":[{"type":"divide","opacity":"0.3"},{"objects":["27d491ba-cfe6-48a9-8a28-51b6079e44a3-000516e9"],"objectType":"m45","type":"highlight","highlightColor":"ff0000"},{"objects":["b7b6ff31-a44b-47ab-9ea0-f93f318332b7-0005174d","b7b6ff31-a44b-47ab-9ea0-f93f318332b7-00051705","b7b6ff31-a44b-47ab-9ea0-f93f318332b7-000516e3","b7b6ff31-a44b-47ab-9ea0-f93f318332b7-00051789"],"objectType":"m45","type":"highlight","highlightColor":"00ff00"},{"objects":["27d491ba-cfe6-48a9-8a28-51b6079e44a3-000516e9"],"objectType":"m45","type":"location"}]}';
+		ws1.send(code(data));
+	}
+	//隔离高亮显示,定位到第二个。
+	document.getElementById("test1066_4_2").onclick = function(e) {
+		console.log("test1066_4_2")
+		data.type = 1066;
+        data.uuid = '{"ldArr":[{"type":"divide","opacity":"0.3"},{"objects":["27d491ba-cfe6-48a9-8a28-51b6079e44a3-000516e9"],"objectType":"m45","type":"highlight","highlightColor":"ff0000"},{"objects":["b7b6ff31-a44b-47ab-9ea0-f93f318332b7-0005174d","b7b6ff31-a44b-47ab-9ea0-f93f318332b7-00051705","b7b6ff31-a44b-47ab-9ea0-f93f318332b7-000516e3","b7b6ff31-a44b-47ab-9ea0-f93f318332b7-00051789"],"objectType":"m45","type":"highlight","highlightColor":"00ff00"},{"objects":["b7b6ff31-a44b-47ab-9ea0-f93f318332b7-0005174d","b7b6ff31-a44b-47ab-9ea0-f93f318332b7-00051705","b7b6ff31-a44b-47ab-9ea0-f93f318332b7-000516e3","b7b6ff31-a44b-47ab-9ea0-f93f318332b7-00051789"],"objectType":"m45","type":"location"}]}';
+		ws1.send(code(data));
+	}
+	//测试用模型：Y1M1-I-CS-105.cim
+	document.getElementById("1066_highlight_area").onclick = function(e) {
+		console.log("1066_highlight_area")
+		data.type = 1066;
+        data.uuid = '{"ldArr":[{"type":"divide","opacity":"0.3"},{"objects":["343bfeff-04dd-4819-958c-2c1d4e9a9ba4-0012438f"],"objectType":"area","type":"highlight","highlightColor":"ff0000"}]}';
+		ws1.send(code(data));
+	}
+	document.getElementById("1066_flash_area").onclick = function(e) {
+		console.log("1066_flash_area")
+		data.type = 1066;
+        data.uuid = '{"ldArr":[{"type":"divide","opacity":"0.3"},{"objects":["343bfeff-04dd-4819-958c-2c1d4e9a9ba4-0012438f"],"objectType":"area","type":"flash","highlightColor":"ff0000","flashColor":"ff8c00","flashTime":"2"}]}';
+		ws1.send(code(data));
+	}
+	//343bfeff-04dd-4819-958c-2c1d4e9a9ba4-00124595
+	document.getElementById("1066_highlight_area_two").onclick = function(e) {
+		console.log("1066_highlight_area")
+		data.type = 1066;
+        data.uuid = '{"ldArr":[{"type":"divide","opacity":"0.3"},{"objects":["343bfeff-04dd-4819-958c-2c1d4e9a9ba4-0012438f","343bfeff-04dd-4819-958c-2c1d4e9a9ba4-00124595"],"objectType":"area","type":"highlight","highlightColor":"ff0000"}]}';
+		ws1.send(code(data));
+	}
+	document.getElementById("1066_highlight_area_two_diff_color").onclick = function(e) {
+		console.log("1066_highlight_area_two_diff_color")
+		data.type = 1066;
+        data.uuid = '{"ldArr":[{"type":"divide","opacity":"0.3"},{"objects":["343bfeff-04dd-4819-958c-2c1d4e9a9ba4-0012438f"],"objectType":"area","type":"highlight","highlightColor":"ff0000"},{"objects":["343bfeff-04dd-4819-958c-2c1d4e9a9ba4-00124595"],"objectType":"area","type":"highlight","highlightColor":"00ff00"}]}';
+		ws1.send(code(data));
+	}
+	
+	document.getElementById("1066_highlight_buildNumber").onclick = function(e) {
+		console.log("1066_highlight_buildNumber")
+		data.type = 1066;
+        data.uuid = '{"ldArr":[{"type":"divide","opacity":"0.3"},{"objects":["Y1M1-I-CS-105-UCD-JZ"],"objectType":"buildNumber","type":"highlight","highlightColor":"ff0000"},{"objects":["YTM1-CS-105-UCD-JG-FT"],"objectType":"buildNumber","type":"highlight","highlightColor":"00ff00"},{"objects":["YTM1-CS-105-UCD-JG-FS"],"objectType":"buildNumber","type":"highlight","highlightColor":"0000ff"}]}';
+		ws1.send(code(data));
+	}
+	
+	document.getElementById("1066_highlight_box").onclick = function(e) {
+		console.log("1066_highlight_box")
+		data.type = 1066;
+        data.uuid = '{"ldArr":[{"type":"divide","opacity":"0.1"},{"objects":["YTM1-CS-105-UCD-JG-FS"],"objectType":"buildNumber","type":"boxHighlight","highlightColor":"ffa500","opacity":"0.3"}]}';
+		ws1.send(code(data));
+	}
+	
+	
+	document.getElementById("1066_clean_all_area_and_line").onclick = function(e) {
+		console.log("1066_clean_all_area_and_line")
+		data.type = 1066;
+        data.uuid = '{"ldArr":[{"type":"cleanAllAreaAndLine"}]}';
+		ws1.send(code(data));
+	}
+	document.getElementById("1066_hide_all_hightlight").onclick = function(e) {
+		console.log("1066_hide_all_hightlight")
+		data.type = 1066;
+        data.uuid = '{"ldArr":[{"type":"hideAll"},{"objects":["YTM1-CS-105-UCD-JG-FS"],"objectType":"buildNumber","type":"highlight","highlightColor":"ffa500"},{"objects":["343bfeff-04dd-4819-958c-2c1d4e9a9ba4-0012438f"],"objectType":"area","type":"highlight","highlightColor":"ff0000"}]}';
+		ws1.send(code(data));
+	}
+	
+	
+</script>
+
+</html>

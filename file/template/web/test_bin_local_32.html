@@ -1,0 +1,175 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="test_bin.css">
+</head>
+
+<body>
+    <div class="layout">
+		<button id="show" style="background-color:#666666; display:none;"> show </button>
+		<button id="hide" style="background-color:#666666; display:none;"> hide </button>
+		<button id="planform" style="background-color:#666666; display:none;"> planform </button>
+		<button id="nav_SetBuildNumber" style="background-color:#666666; display:none;"> nav_SetBuildNumber </button>
+		<button id="nav_SetFloorHeight" style="background-color:#666666; display:none;"> nav_SetFloorHeight </button>
+		<button id="Navmap" style="background-color:#666666; display:none;"> Navmap </button>
+		<button id="nav_FirstPersonView" style="background-color:#666666; display:none;"> nav_FirstPersonView </button>
+		
+        <button id="btnReset" onclick="reset()">回归主视图</button>
+
+		<p>
+		<button id="entry_mark">进入标记</button>
+		</p>
+		<p>
+		<button id="exit_mark">退出标记</button>
+		</p>
+		
+		<p>
+		<button id="show_mark">显示标记</button>
+		</p>
+		<p>
+		<button id="hide_mark">隐藏标记</button>
+		</p>
+		<p>
+		<button id="location_mark">定位标记</button>
+		</p>
+		
+		<p>
+		<button id="set_mark_use_color">使用颜色绘制标记:关闭</button>
+		</p>
+		<p>
+		<button id="set_mark_color" disabled="true">设置标记颜色</button>
+		</p>
+		<p>
+		<button id="location_mark_with_color" disabled="true">定位标记(使用颜色)</button>
+		</p>
+		
+		
+		<p>
+		<button id="top" >top</button>
+		</p>
+		<p>
+		<button id="front" >front</button>
+		</p>
+
+    </div>
+
+    <canvas height="720" width="1280" id="showcanvas"> </canvas>
+
+
+    <div id="Navmap" class="Navmap" style="display:none; background:url(D://Home/Workspace/cbim_repos/cbimraas_new/data/save/views/NavMap.jpg) center;background-size:100%;">
+        <button style="position:absolute; top:1%;right:1%" onclick="hideNavmap()">X</button>
+        <svg height="300" width="300" xmlns="http://www.w3.org/2000/svg" version="1.1">
+			<polygon id="navigationpolygon" points="150,135 144,144 156,144"
+				style="fill:lime;stroke:purple;stroke-width:1" />
+			<circle id="navigationCircle" cx="150" cy="150" r="6" stroke="black" stroke-width="1" opacity="1"
+				fill="#11DAB7"></circle>
+		</svg>
+    </div>
+</body>
+
+<script src="js/websocket.js"></script>
+<script src="js/global_vars.js"></script>
+<script src="js/basic_functions.js"></script>
+<script src="js/basic_buttons.js"></script>
+<script src="js/window_ops.js"></script>
+<script src="js/canvas_ops.js"></script>
+<script src="js/navigation_map.js"></script>
+
+<script>
+	document.getElementById("entry_mark").onclick = function(e) {
+		console.log("entry_mark");
+		marking = true;
+		data.type = 32;
+		data.extraType = 1;
+		ws1.send(code(data));
+	}
+	document.getElementById("exit_mark").onclick = function(e) {
+		console.log("exit_mark");
+		marking = false;
+		data.type = 32;
+		data.extraType = 0;
+		ws1.send(code(data));
+	}
+	
+	document.getElementById("show_mark").onclick = function(e) {
+		console.log("show_mark");
+		data.type = 32;
+		data.extraType = 1;
+		ws1.send(code(data));
+	}
+	document.getElementById("hide_mark").onclick = function(e) {
+		console.log("hide_mark");
+		data.type = 32;
+		data.extraType = 0;
+		ws1.send(code(data));
+	}
+	document.getElementById("location_mark").onclick = function(e) {
+		console.log("location_mark");
+		data.type = 32;
+		data.extraType = 2;
+		data.uuid = "15.98,13.33,22.96,7.73,8.91,19.79,0.04,1.00,0.02,4.60,1.35,0.10";
+		ws1.send(code(data));
+	}
+	var mark_use_color = false;
+	//是否使用颜色绘制图标
+	document.getElementById("set_mark_use_color").onclick = function(e) {
+		console.log("set_mark_use_color");
+		mark_use_color = !mark_use_color;
+		data.type = 32;
+		data.extraType = 3;
+		data.dx = mark_use_color?1:0;
+		ws1.send(code(data));
+		if(mark_use_color)
+		{
+			this.innerHTML ="使用颜色绘制标记:打开";
+			document.getElementById("set_mark_color").removeAttribute("disabled");
+			document.getElementById("location_mark_with_color").removeAttribute("disabled");
+		}else{
+			this.innerHTML ="使用颜色绘制标记:关闭";
+			document.getElementById("set_mark_color").setAttribute("disabled", true);
+			document.getElementById("location_mark_with_color").setAttribute("disabled", true);
+		}
+	}
+	
+	//设置绘制图标颜色
+	document.getElementById("set_mark_color").onclick = function(e) {
+		console.log("set_mark_color");
+		data.type = 32;
+		data.extraType = 4;
+		data.uuid = '1.0,1.0,0.0';	//rgb
+		ws1.send(code(data));
+	}
+	//使用指定颜色图标定位标注。
+	document.getElementById("location_mark_with_color").onclick = function(e) {
+		console.log("location_mark_with_color");
+		data.type = 32;
+		data.extraType = 5;
+		data.uuid = '15.98,13.33,22.96,7.73,8.91,19.79,0.04,1.00,0.02,4.60,1.35,0.10,1.0,1.0,0.0';
+		ws1.send(code(data));
+	}
+	
+	
+	
+	document.getElementById("top").onclick = function(e) {
+			console.log("top")
+			data.type = 49;
+			data.anx = 0;
+			data.any = 1;
+			data.anz = 0;
+			ws1.send(code(data));
+	}
+			document.getElementById("front").onclick = function(e) {
+			console.log("front")
+			data.type = 49;
+			data.anx = 0;
+			data.any = 0;
+			data.anz = 1;
+			ws1.send(code(data));
+	}
+	
+</script>
+
+</html>

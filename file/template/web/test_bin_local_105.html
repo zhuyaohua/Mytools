@@ -1,0 +1,135 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="test_bin.css">
+</head>
+
+<body>
+    <div class="layout">
+		<button id="show" style="background-color:#666666; display:none;"> show </button>
+		<button id="hide" style="background-color:#666666; display:none;"> hide </button>
+		<button id="planform" style="background-color:#666666; display:none;"> planform </button>
+		<button id="nav_SetBuildNumber" style="background-color:#666666; display:none;"> nav_SetBuildNumber </button>
+		<button id="nav_SetFloorHeight" style="background-color:#666666; display:none;"> nav_SetFloorHeight </button>
+		<button id="Navmap" style="background-color:#666666; display:none;"> Navmap </button>
+		<button id="nav_FirstPersonView" style="background-color:#666666; display:none;"> nav_FirstPersonView </button>
+		
+        <button id="btnReset" onclick="reset()">回归主视图</button>
+
+		<p>
+		<button id="105_t1">105_清除</button>
+		</p>
+		<p>
+		<button id="105_t2">105_红线</button>
+		</p>
+		<p>
+		<button id="105_t3">105_橙线</button>
+		</p>
+				<p>
+		<button id="105_t4">105_红线隔离闪烁</button>
+		</p>
+		<p>
+		<button id="105_t5">105_橙线隔离闪烁</button>
+		</p>
+		<p>
+		<button id="top" >top</button>
+		</p>
+		<p>
+		<button id="front" >front</button>
+		</p>
+
+    </div>
+
+    <canvas height="720" width="1280" id="showcanvas"> </canvas>
+
+
+    <div id="Navmap" class="Navmap" style="display:none; background:url(D://Home/Workspace/cbim_repos/cbimraas_new/data/save/views/NavMap.jpg) center;background-size:100%;">
+        <button style="position:absolute; top:1%;right:1%" onclick="hideNavmap()">X</button>
+        <svg height="300" width="300" xmlns="http://www.w3.org/2000/svg" version="1.1">
+			<polygon id="navigationpolygon" points="150,135 144,144 156,144"
+				style="fill:lime;stroke:purple;stroke-width:1" />
+			<circle id="navigationCircle" cx="150" cy="150" r="6" stroke="black" stroke-width="1" opacity="1"
+				fill="#11DAB7"></circle>
+		</svg>
+    </div>
+</body>
+
+<script src="js/websocket.js"></script>
+<script src="js/global_vars.js"></script>
+<script src="js/basic_functions.js"></script>
+<script src="js/basic_buttons.js"></script>
+<script src="js/window_ops.js"></script>
+<script src="js/canvas_ops.js"></script>
+<script src="js/navigation_map.js"></script>
+
+<script>
+	//测试用模型：样例-ALL1117.cim
+	document.getElementById("105_t1").onclick = function(e) {
+		console.log("105_t1")
+		data.type = 105;
+        data.extraType = 0;
+        data.uuid = ''
+		ws1.send(code(data));
+	}
+	
+	document.getElementById("105_t2").onclick = function(e) {
+		console.log("105_t2")
+		data.type = 105;
+		data.extraType = 1;
+		data.dx = 0;
+		data.dy = 0;
+        data.uuid = '8a473d18-03ff-4496-a7eb-8b0063a8d434-0006067b'
+		ws1.send(code(data));
+	}
+	document.getElementById("105_t3").onclick = function(e) {
+		console.log("105_t3")
+		data.type = 105;
+		data.extraType = 1;
+		data.dx = 0;	//是否显示所有线。0不显示，1显示。
+		data.dy = 4;	//typeIndex:默认0--用地红线、道路红线;1--绿地绿线;2--河道蓝线;3--电力黑线;4--轨道交通橙线;5--文物紫线;
+        data.uuid = 'c039b5c2-cd78-43d2-af67-ab824d125269-0006d0e1'
+		ws1.send(code(data));
+	}
+	
+	document.getElementById("105_t4").onclick = function(e) {
+		console.log("105_t4")
+		data.type = 105;
+		data.extraType = 2;
+		data.dx = 0;
+		data.dy = 0;
+        data.uuid = '8a473d18-03ff-4496-a7eb-8b0063a8d434-0006067b'
+		ws1.send(code(data));
+	}
+	document.getElementById("105_t5").onclick = function(e) {
+		console.log("105_t5")
+		data.type = 105;
+		data.extraType = 2;
+		data.dx = 0;
+		data.dy = 4;
+        data.uuid = 'c039b5c2-cd78-43d2-af67-ab824d125269-0006d0e1'
+		ws1.send(code(data));
+	}
+	
+	document.getElementById("top").onclick = function(e) {
+			console.log("top")
+			data.type = 49;
+			data.anx = 0;
+			data.any = 1;
+			data.anz = 0;
+			ws1.send(code(data));
+	}
+			document.getElementById("front").onclick = function(e) {
+			console.log("front")
+			data.type = 49;
+			data.anx = 0;
+			data.any = 0;
+			data.anz = 1;
+			ws1.send(code(data));
+	}
+	
+</script>
+
+</html>

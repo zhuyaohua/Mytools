@@ -1,0 +1,87 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="test_bin.css">
+</head>
+
+<body>
+    <div class="layout">
+		<button id="show" style="background-color:#666666; display:none;"> show </button>
+		<button id="hide" style="background-color:#666666; display:none;"> hide </button>
+		<button id="planform" style="background-color:#666666; display:none;"> planform </button>
+		<button id="nav_SetBuildNumber" style="background-color:#666666; display:none;"> nav_SetBuildNumber </button>
+		<button id="nav_SetFloorHeight" style="background-color:#666666; display:none;"> nav_SetFloorHeight </button>
+		<button id="Navmap" style="background-color:#666666; display:none;"> Navmap </button>
+		<button id="nav_FirstPersonView" style="background-color:#666666; display:none;"> nav_FirstPersonView </button>
+		
+        <button id="btnReset" onclick="reset()">回归主视图</button>
+        <p>
+		<button id="test1003_0">1003清除高亮</button>
+		</p>
+		<p>
+		<button id="test1003_1">1003 buildNumber高亮</button>
+		</p>
+		<p>
+		<button id="test1003_2">1003多组高亮</button>
+		</p>
+
+    </div>
+
+    <canvas height="720" width="1280" id="showcanvas"> </canvas>
+
+
+    <div id="Navmap" class="Navmap" style="display:none; background:url(D://Home/Workspace/cbim_repos/cbimraas_new/data/save/views/NavMap.jpg) center;background-size:100%;">
+        <button style="position:absolute; top:1%;right:1%" onclick="hideNavmap()">X</button>
+        <svg height="300" width="300" xmlns="http://www.w3.org/2000/svg" version="1.1">
+			<polygon id="navigationpolygon" points="150,135 144,144 156,144"
+				style="fill:lime;stroke:purple;stroke-width:1" />
+			<circle id="navigationCircle" cx="150" cy="150" r="6" stroke="black" stroke-width="1" opacity="1"
+				fill="#11DAB7"></circle>
+		</svg>
+    </div>
+</body>
+
+<script src="js/websocket.js"></script>
+<script src="js/global_vars.js"></script>
+<script src="js/basic_functions.js"></script>
+<script src="js/basic_buttons.js"></script>
+<script src="js/window_ops.js"></script>
+<script src="js/canvas_ops.js"></script>
+<script src="js/navigation_map.js"></script>
+
+<script>
+
+	//测试用模型：Y1M1-I-CS-105.cim
+	document.getElementById("test1003_0").onclick = function(e) {
+		console.log("test1003_0")
+		data.type = 500;
+		data.extraType = 0;
+        data.uuid = '0;0;0';
+		ws1.send(code(data));
+	}
+	
+	document.getElementById("test1003_2").onclick = function(e) {
+		console.log("test1003_2")
+		data.type = 1199;
+		data.extraType = 4;
+		data.asx = 0.9;
+		data.asy = 0.05;
+		data.anx = -20.5;
+		data.any = -24.2;
+        //data.uuid = '2;2;9;1ac2a737-3ef4-48b3-8e1c-f702fb6f2b9c-00126f7e;ae4042db-26d4-43e3-aab0-767aabc36e05-00126fbb;2;1.0;0.0;0.0;0.0;1.0;0.0;1;1';
+		data.uuid = '064a5c50-9f07-4824-ba83-ff41758fcb9f-001349e5;2;2;2;eaed549f-2366-464a-b889-875e30609bcd-00456ac0;d2281abc-0f9c-4eb5-9817-d165f3294061-0016063c;-25.668253216075154;2.050189464882713;0;-33.045237265252524;6.401350957662378;0;-25.58750708133424;3.061126389615992;0;-29.42529466751058;10.275433505705493;0';
+		ws1.send(code(data));
+	}
+	document.getElementById("test1003_1").onclick = function(e) {
+		console.log("test1003_1")
+		data.type = 1003;
+		data.uuid = '1;2;3;YTM1-CS-105-UCD-JG-FT;YTM1-CS-105-UCD-JG-FS;1.0;0.5;0.0';
+		ws1.send(code(data));
+	}
+	
+</script>
+
+</html>

@@ -1,0 +1,442 @@
+{
+    "data": {
+        "projects": [
+            {
+                "id": "918314309438672896",
+                "isDeleted": "no",
+                "taskFormCode": "ZS202106041652_000",
+                "projectName": "中设样例项目",
+                "createBy": "425403652883611649",
+                "designDepartment": [],
+                "designPhase": [],
+                "projectManager": {
+                    "id": "425403652883611649",
+                    "name": "韩智华",
+                    "editPermission": false
+                },
+                "designers": {
+                    "others": [
+                        {
+                            "id": "425403652883611649",
+                            "name": "韩智华",
+                            "editPermission": false
+                        }
+                    ]
+                },
+                "taskFormName": "规划报批",
+                "projectCode": "ZS202106041652",
+                "projectType": {
+                    "id": "425403443095535625",
+                    "title": "商业建筑"
+                },
+                "projectAddress": {
+                    "projectLocation": {
+                        "id": "",
+                        "title": "天府四街菁蓉汇"
+                    },
+                    "contructionArea": [
+                        "四川",
+                        "成都市",
+                        "锦江区"
+                    ]
+                },
+                "projectScale": "",
+                "buildArea": "",
+                "projectImg": null
+            },
+            {
+                "id": "918314494961127424",
+                "isDeleted": "no",
+                "taskFormCode": "ZS202106041652_001",
+                "projectName": "中设样例项目",
+                "createBy": "425403652883611649",
+                "designDepartment": [],
+                "designPhase": [],
+                "projectManager": {
+                    "id": "425403652883611649",
+                    "name": "韩智华",
+                    "editPermission": false
+                },
+                "designers": {
+                    "others": [
+                        {
+                            "id": "425403652883611649",
+                            "name": "韩智华",
+                            "editPermission": false
+                        }
+                    ]
+                },
+                "taskFormName": "施工审查",
+                "projectCode": "ZS202106041652",
+                "projectType": {
+                    "id": "425403443095535625",
+                    "title": "商业建筑"
+                },
+                "projectAddress": {
+                    "projectLocation": {
+                        "id": "",
+                        "title": "天府四街菁蓉汇"
+                    },
+                    "contructionArea": [
+                        "四川",
+                        "成都市",
+                        "锦江区"
+                    ]
+                },
+                "projectScale": "",
+                "buildArea": "",
+                "projectImg": null
+            },
+            {
+                "id": "918314660694855680",
+                "isDeleted": "no",
+                "taskFormCode": "ZS202106041652_002",
+                "projectName": "中设样例项目",
+                "createBy": "425403652883611649",
+                "designDepartment": [],
+                "designPhase": [],
+                "projectManager": {
+                    "id": "425403652883611649",
+                    "name": "韩智华",
+                    "editPermission": false
+                },
+                "designers": {
+                    "others": [
+                        {
+                            "id": "425403652883611649",
+                            "name": "韩智华",
+                            "editPermission": false
+                        }
+                    ]
+                },
+                "taskFormName": "施工管理",
+                "projectCode": "ZS202106041652",
+                "projectType": {
+                    "id": "425403443095535625",
+                    "title": "商业建筑"
+                },
+                "projectAddress": {
+                    "projectLocation": {
+                        "id": "",
+                        "title": "天府四街菁蓉汇"
+                    },
+                    "contructionArea": [
+                        "四川",
+                        "成都市",
+                        "锦江区"
+                    ]
+                },
+                "projectScale": "",
+                "buildArea": "",
+                "projectImg": null
+            },
+            {
+                "id": "918320129236799488",
+                "isDeleted": "no",
+                "taskFormCode": "ZS202106041656_000",
+                "projectName": "中设数据样例项目-开发测试",
+                "createBy": "425406383818276865",
+                "designDepartment": [],
+                "designPhase": [],
+                "projectManager": {
+                    "id": "425406383818276865",
+                    "name": "张鑫",
+                    "editPermission": false
+                },
+                "designers": {
+                    "others": [
+                        {
+                            "id": "425403443055165441",
+                            "name": "shenf@cadg.cn",
+                            "editPermission": false
+                        }
+                    ]
+                },
+                "taskFormName": "开发项目",
+                "projectCode": "ZS202106041656",
+                "projectType": {
+                    "id": "425403443095535625",
+                    "title": "商业建筑"
+                },
+                "projectAddress": {
+                    "projectLocation": {
+                        "id": "",
+                        "title": "双流区菁蓉汇"
+                    },
+                    "contructionArea": [
+                        "四川",
+                        "成都市",
+                        "金牛区"
+                    ]
+                },
+                "projectScale": "",
+                "buildArea": "",
+                "projectImg": null
+            },
+            {
+                "id": "918320289232719872",
+                "isDeleted": "no",
+                "taskFormCode": "ZS202106041656_001",
+                "projectName": "中设数据样例项目-开发测试",
+                "createBy": "425406383818276865",
+                "designDepartment": [],
+                "designPhase": [],
+                "projectManager": {
+                    "id": "425406383818276865",
+                    "name": "张鑫",
+                    "editPermission": false
+                },
+                "designers": {
+                    "others": [
+                        {
+                            "id": "425403443055165441",
+                            "name": "shenf@cadg.cn",
+                            "editPermission": false
+                        }
+                    ]
+                },
+                "taskFormName": "测试项目",
+                "projectCode": "ZS202106041656",
+                "projectType": {
+                    "id": "425403443095535625",
+                    "title": "商业建筑"
+                },
+                "projectAddress": {
+                    "projectLocation": {
+                        "id": "",
+                        "title": "双流区菁蓉汇"
+                    },
+                    "contructionArea": [
+                        "四川",
+                        "成都市",
+                        "金牛区"
+                    ]
+                },
+                "projectScale": "",
+                "buildArea": "",
+                "projectImg": null
+            },
+            {
+                "id": "925082918273945600",
+                "isDeleted": "no",
+                "taskFormCode": "ZS202106041652_003",
+                "projectName": "中设样例项目",
+                "createBy": "425403652883611649",
+                "designDepartment": [],
+                "designPhase": [],
+                "projectManager": {
+                    "id": "425403652883611649",
+                    "name": "韩智华",
+                    "editPermission": false
+                },
+                "designers": {
+                    "others": [
+                        {
+                            "id": "425403652883611649",
+                            "name": "韩智华",
+                            "editPermission": false
+                        }
+                    ]
+                },
+                "taskFormName": "竣工管理",
+                "projectCode": "ZS202106041652",
+                "projectType": {
+                    "id": "425403443095535625",
+                    "title": "商业建筑"
+                },
+                "projectAddress": {
+                    "projectLocation": {
+                        "id": "",
+                        "title": "天府四街菁蓉汇"
+                    },
+                    "contructionArea": [
+                        "四川",
+                        "成都市",
+                        "锦江区"
+                    ]
+                },
+                "projectScale": "",
+                "buildArea": "",
+                "projectImg": null
+            },
+            {
+                "id": "925083626146631680",
+                "isDeleted": "no",
+                "taskFormCode": "ZS202106041652_004",
+                "projectName": "中设样例项目",
+                "createBy": "425403652883611649",
+                "designDepartment": [],
+                "designPhase": [],
+                "projectManager": {
+                    "id": "425403652883611649",
+                    "name": "韩智华",
+                    "editPermission": false
+                },
+                "designers": {
+                    "others": [
+                        {
+                            "id": "425403652883611649",
+                            "name": "韩智华",
+                            "editPermission": false
+                        }
+                    ]
+                },
+                "taskFormName": "市政施工图审查",
+                "projectCode": "ZS202106041652",
+                "projectType": {
+                    "id": "425403443095535625",
+                    "title": "商业建筑"
+                },
+                "projectAddress": {
+                    "projectLocation": {
+                        "id": "",
+                        "title": "天府四街菁蓉汇"
+                    },
+                    "contructionArea": [
+                        "四川",
+                        "成都市",
+                        "锦江区"
+                    ]
+                },
+                "projectScale": "",
+                "buildArea": "",
+                "projectImg": null
+            },
+            {
+                "id": "925087309794119680",
+                "isDeleted": "no",
+                "taskFormCode": "ZS202106230929_000",
+                "projectName": "中设样例项目",
+                "createBy": "425403652883611649",
+                "designDepartment": [],
+                "designPhase": [],
+                "projectManager": {
+                    "id": "425403652883611649",
+                    "name": "韩智华",
+                    "editPermission": false
+                },
+                "designers": {
+                    "others": [
+                        {
+                            "id": "425403652883611649",
+                            "name": "韩智华",
+                            "editPermission": false
+                        }
+                    ]
+                },
+                "taskFormName": "BIM审查",
+                "projectCode": "ZS202106230929",
+                "projectType": {
+                    "id": "425403443095535625",
+                    "title": "商业建筑"
+                },
+                "projectAddress": {
+                    "projectLocation": {
+                        "id": "",
+                        "title": "公庄大街19号"
+                    },
+                    "contructionArea": [
+                        "北京",
+                        "西城区"
+                    ]
+                },
+                "projectScale": "3.14",
+                "buildArea": "31.4",
+                "projectImg": null
+            },
+            {
+                "id": "925089833850769408",
+                "isDeleted": "no",
+                "taskFormCode": "ZS202106230946_000",
+                "projectName": "中设样例项目",
+                "createBy": "425403652883611649",
+                "designDepartment": [],
+                "designPhase": [],
+                "projectManager": {
+                    "id": "425403652883611649",
+                    "name": "韩智华",
+                    "editPermission": false
+                },
+                "designers": {
+                    "others": [
+                        {
+                            "id": "425403652883611649",
+                            "name": "韩智华",
+                            "editPermission": false
+                        }
+                    ]
+                },
+                "taskFormName": "BIM审查",
+                "projectCode": "ZS202106230946",
+                "projectType": {
+                    "id": "425403443095535641",
+                    "title": "办公"
+                },
+                "projectAddress": {
+                    "projectLocation": {
+                        "id": "",
+                        "title": "西乡一村"
+                    },
+                    "contructionArea": [
+                        "广东",
+                        "深圳市",
+                        "罗湖区"
+                    ]
+                },
+                "projectScale": "",
+                "buildArea": "",
+                "projectImg": null
+            },
+            {
+                "id": "925091414847524864",
+                "isDeleted": "no",
+                "taskFormCode": "ZS202106231001_000",
+                "projectName": "中设样例项目",
+                "createBy": "425403652883611649",
+                "designDepartment": [],
+                "designPhase": [],
+                "projectManager": {
+                    "id": "425403652883611649",
+                    "name": "韩智华",
+                    "editPermission": false
+                },
+                "designers": {
+                    "others": [
+                        {
+                            "id": "425403652883611649",
+                            "name": "韩智华",
+                            "editPermission": false
+                        }
+                    ]
+                },
+                "taskFormName": "BIM审查",
+                "projectCode": "ZS202106231001",
+                "projectType": {
+                    "id": "425403443095535625",
+                    "title": "商业建筑"
+                },
+                "projectAddress": {
+                    "projectLocation": {
+                        "id": "",
+                        "title": "南京路1号"
+                    },
+                    "contructionArea": [
+                        "上海",
+                        "黄浦区"
+                    ]
+                },
+                "projectScale": "",
+                "buildArea": "",
+                "projectImg": null
+            }
+        ],
+        "enterprise": {
+            "name": "交付平台组",
+            "entCode": "delivery",
+            "managerId": "425403443055165441"
+        }
+    },
+    "success": true,
+    "code": 200,
+    "message": "操作成功"
+}

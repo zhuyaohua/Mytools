@@ -1,0 +1,154 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="test_bin.css">
+</head>
+
+<body>
+    <div class="layout">
+		<button id="show" style="background-color:#666666; display:none;"> show </button>
+		<button id="hide" style="background-color:#666666; display:none;"> hide </button>
+		<button id="planform" style="background-color:#666666; display:none;"> planform </button>
+		<button id="nav_SetBuildNumber" style="background-color:#666666; display:none;"> nav_SetBuildNumber </button>
+		<button id="nav_SetFloorHeight" style="background-color:#666666; display:none;"> nav_SetFloorHeight </button>
+		<button id="Navmap" style="background-color:#666666; display:none;"> Navmap </button>
+		<button id="nav_FirstPersonView" style="background-color:#666666; display:none;"> nav_FirstPersonView </button>
+		
+        <button id="btnReset" onclick="reset()">回归主视图</button>
+		<p>
+		<button id="test_804_6">dwg加载</button>
+		</p>
+		<p>
+		<button id="test_1066_backline">1066退线检测</button>
+		</p>
+		<p>
+		<button id="1066_clean_all_area_and_line">1066_清除所有线和面积</button>
+		</p>
+		<p>
+		<button id="top" >top</button>
+		</p>
+		<p>
+		<button id="front" >front</button>
+		</p>
+		<p>
+		<button id="1066_test" >1066_test</button>
+		</p>
+
+    </div>
+
+    <canvas height="720" width="1280" id="showcanvas"> </canvas>
+
+
+    <div id="Navmap" class="Navmap" style="display:none; background:url(D://Home/Workspace/cbim_repos/cbimraas_new/data/save/views/NavMap.jpg) center;background-size:100%;">
+        <button style="position:absolute; top:1%;right:1%" onclick="hideNavmap()">X</button>
+        <svg height="300" width="300" xmlns="http://www.w3.org/2000/svg" version="1.1">
+			<polygon id="navigationpolygon" points="150,135 144,144 156,144"
+				style="fill:lime;stroke:purple;stroke-width:1" />
+			<circle id="navigationCircle" cx="150" cy="150" r="6" stroke="black" stroke-width="1" opacity="1"
+				fill="#11DAB7"></circle>
+		</svg>
+    </div>
+</body>
+
+<script src="js/websocket.js"></script>
+<script src="js/global_vars.js"></script>
+<script src="js/basic_functions.js"></script>
+<script src="js/basic_buttons.js"></script>
+<script src="js/window_ops.js"></script>
+<script src="js/canvas_ops.js"></script>
+<script src="js/navigation_map.js"></script>
+
+<script>
+
+	//测试文件：site1125.cim,site1125.dwg.
+	//基本流程：
+	//1.804,6
+	//2.1066,lineCheck.
+	//会返回json：
+	//sz_data:{
+	//    "type": "backline_check",
+	//    "lineName": "lineName",
+	//    "bn_list": [
+	//        "G-11#",
+	//        "I-13#",
+	//        "J-14#",
+	//        "K-15#"
+	//    ]
+	//}
+	//测试代码会对检测不过的，红色包围盒高亮显示。
+
+	document.getElementById("test_804_6").onclick = function(e) {
+		console.log("test_804_6")
+		data.type = 804;
+		data.extraType = 6;
+		data.uuid = 'd:/model/site1125.dwg,1;1;5.0;0_0_0;0.001';
+		ws1.send(code(data));
+	}
+
+	
+	document.getElementById("test_1066_backline").onclick = function(e) {
+		console.log("test_1066_backline")
+		data.type = 1066;
+		//0：用地红线
+		//1：道路红线
+		//2：河流蓝线
+		//3：电力黑线
+		//4：绿地绿线
+		//5：文物紫线
+		//6：轨道橙线
+		//左一竖上两横
+        data.uuid = '{"ldArr":[{"type":"lineCheck","backlineType":1,"fullPath":"d:/model/site1125.dwg","offset":15.0,"height":10.0,"displayLineBox":0,"edgeColor":"DC143CFF","faceColor":"FFA5007F"}]}';
+		//44条线，多个框框。
+		//data.uuid = '{"ldArr":[{"type":"lineCheck","backlineType":0,"fullPath":"d:/model/site1125.dwg","offset":3.0,"height":5.0,"displayLineBox":1,"edgeColor":"DC143CFF","faceColor":"FFA5007F"}]}';
+		//右边一竖线。
+		//data.uuid = '{"ldArr":[{"type":"lineCheck","backlineType":2,"fullPath":"d:/model/site1125.dwg","offset":5.0,"height":10.0,"displayLineBox":1,"edgeColor":"DC143CFF","faceColor":"FFA5007F"}]}';
+		//左上小斜线。
+		//data.uuid = '{"ldArr":[{"type":"lineCheck","backlineType":3,"fullPath":"d:/model/site1125.dwg","offset":20.0,"height":10.0,"displayLineBox":1,"edgeColor":"DC143CFF","faceColor":"FFA5007F"}]}';
+		//上边一横。
+		//data.uuid = '{"ldArr":[{"type":"lineCheck","backlineType":4,"fullPath":"d:/model/site1125.dwg","offset":10.0,"height":10.0,"displayLineBox":1,"edgeColor":"DC143CFF","faceColor":"FFA5007F"}]}';
+		//5没有
+		//data.uuid = '{"ldArr":[{"type":"lineCheck","backlineType":5,"fullPath":"d:/model/site1125.dwg","offset":10.0,"height":10.0,"displayLineBox":1,"edgeColor":"DC143CFF","faceColor":"FFA5007F"}]}';
+		//右下大斜线。
+		//data.uuid = '{"ldArr":[{"type":"lineCheck","backlineType":6,"fullPath":"d:/model/site1125.dwg","offset":10.0,"height":10.0,"displayLineBox":1,"edgeColor":"DC143CFF","faceColor":"FFA5007F"}]}';
+		
+		ws1.send(code(data));
+	}
+
+	document.getElementById("1066_clean_all_area_and_line").onclick = function(e) {
+		console.log("1066_clean_all_area_and_line")
+		data.type = 1066;
+        data.uuid = '{"ldArr":[{"type":"cleanAllAreaAndLine"}]}';
+		ws1.send(code(data));
+	}
+	
+	document.getElementById("1066_test").onclick = function(e) {
+		console.log("1066_clean_all_area_and_line")
+		data.type = 1066;
+		var bn = "B-2#";
+        data.uuid = '{"ldArr":[{"objects":["'+bn+'"],"objectType":"buildNumber","type":"boxHighlight","highlightColor":"ff0000","opacity":"0.5"}]}';
+		ws1.send(code(data));
+	}
+
+	document.getElementById("top").onclick = function(e) {
+			console.log("top")
+			data.type = 49;
+			data.anx = 0;
+			data.any = 1;
+			data.anz = 0;
+			ws1.send(code(data));
+	}
+			document.getElementById("front").onclick = function(e) {
+			console.log("front")
+			data.type = 49;
+			data.anx = 0;
+			data.any = 0;
+			data.anz = 1;
+			ws1.send(code(data));
+	}
+	
+</script>
+
+</html>
