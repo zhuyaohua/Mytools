@@ -1062,10 +1062,6 @@ def indicatorCDM():
         carbarn_area = 0
         notcarbarn_area = 0
         wudinggrandclass = 0
-        selfparking_upper = 0
-        selfparking_downner = 0
-        mechanicalparking_upper = 0
-        mechanicalparking_downner = 0
         for item_building_area in item_building["areaList"]:
             if item_building_area["properties"]["GH-A-135"]["Value"].startswith("B"):
                 count = len(item_building_area["properties"]["GH-A-175"]["Value"].split(";"))
@@ -1090,10 +1086,7 @@ def indicatorCDM():
         temp["建筑-室内机动车停车库"] = carbarn_area
         temp["建筑-室内非机动车停车库"] = carbarn_area
         temp["临时屋顶绿化面积"] = wudinggrandclass
-        # temp["建筑-自走式停车位面积-地上"] = selfparking_upper
-        # temp["建筑-自走式停车位面积-地下"] = selfparking_downner
-        # temp["建筑-自走式停车位面积-地上"] = selfparking_upper
-        # temp["建筑-自走式停车位面积-地下"] = selfparking_downner
+
         building.append(temp)
     print("\033[1;33m%s\033[0m"%building)
 
