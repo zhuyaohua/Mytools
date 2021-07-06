@@ -816,7 +816,6 @@ def ReadCAD():
 
 def FindUid():
     uid = {}
-
     for itemCAD in jsoncaddata["objects"]:
         if itemCAD["type"] is not None:
             if itemCAD["type"] in "GraphicLinkage":
@@ -836,91 +835,44 @@ def Findmanual():
 def FindReadCAD(type, condictions=set(), rulelib=None, resultcode=None):
     uid = {}
     count = 0
-    rule = {}
-    if rulelib: rule = RuleDispose(rulelib, resultcode).ruledata()
+    #联动信息提取
     for itemCAD in jsoncaddata["objects"]:
         if itemCAD["type"] is not None:
             if itemCAD["type"] in "GraphicLinkage":
                 uid[itemCAD["uid"]] = itemCAD["properties"]
 
     for itemCAD in jsoncaddata["objects"]:
-
         if itemCAD["type"] == type:
             resultvalues = []
             resultdic = {}
             for item, value in itemCAD["properties"].items():
                 resultvalues.append(value["Value"])
-                if condictions < set(resultvalues):
-                    resultdic.setdefault(itemCAD["uid"], itemCAD["properties"])
-                    continue
+            if condictions < set(resultvalues):
+                temp = itemCAD["properties"]
+                if "manualCheckResult" in itemCAD.keys():
+                    temp["manualCheckResult"]=jsonpath(itemCAD["manualCheckResult"],"$.*")
+                resultdic.setdefault(itemCAD["uid"],temp)
+
             count += len(resultdic)
             for uid, properties in resultdic.items():
-                print("\033[1;30;42m*\033[0m" * 100)
+                print("\033[1;34m*\033[0m" * 100)
                 print(uid)
-
-                if rulelib:
-                    vaildresult = []
-                    temp_raw = {}
-                    for key in properties: temp_raw[key] = properties[key]["Value"]
-                    temp_keys = set(temp_raw.keys())
-
-                    for ruleitems in rule:
-                        for key in ruleitems:
-                            if isinstance(key, tuple): vaildresultkey = key
-                        checkkeys = list(ruleitems.keys())
-                        checkkeys.remove(vaildresultkey)
-                        for checkkey in checkkeys:
-                            if checkkey not in properties.keys():
-                                properties[checkkey] = {"Value": "未给值"}
-                                print("\033[1;33m缺少参数：%s\033[0m" % checkkey)
-                        flag = True
-                        for checkkey in checkkeys:
-                            if ruleitems[checkkey] == "ALL":
-                                continue
-                            elif isinstance(properties[checkkey]["Value"], bool):
-                                if properties[checkkey]["Value"] is False and "否" in ruleitems[checkkey]: continue
-                                if properties[checkkey]["Value"] is True and "是" in ruleitems[checkkey]:
-                                    continue
-                                else:
-                                    flag = False
-                            # elif isinstance(eval(properties[checkkey]["Value"]),float):
-                            #     if Decimal(properties[checkkey]["Value"]) == Decimal(ruleitems[checkkey]):continue
-                            #     if properties[checkkey]["Value"] is True and "是" in ruleitems[checkkey]:continue
-                            #     else:flag=False
-                            elif not isinstance(properties[checkkey]["Value"], bool):
-                                if properties[checkkey]["Value"] in ruleitems[checkkey]:
-                                    continue
-                                else:
-                                    flag = False
-                        if flag:
-                            for key in ruleitems:
-                                if isinstance(key, tuple): vaildresult.append((key, ruleitems[key]))
-                    for i, v in properties.items():
-                        if not v["Value"] == "未给值":
-                            print(i, v)
-                    if len(vaildresult) == 0:
-                        print(properties, ruleitems)
+                for i, v in properties.items():
+                    if i != "manualCheckResult":print(i, v)
                     else:
-                        print("\033[1;33m%s %s 合法值为：%s\033[0m" % (
-                            vaildresult[0][0][0], vaildresult[0][0][1], vaildresult[0][1]))
+                        print("manualCheckResult")
+                        for itemmanualdata in v:
+                            print("\033[1;33m-\033[0m"*100)
+                            for i,v in itemmanualdata.items():
+                                print(i,v)
+                        print("\033[1;33m-\033[0m"*100)
 
-                else:
-                    for i, v in properties.items():
-                        print(i, v)
-
-                    if uid in Findmanual().keys():
-                        print("\033[1;33m%s 人工审查：\033[0m" % type)
-                        for i in Findmanual()[uid]:
-                            print("#" * 50)
-                            for ii, vv in i["properties"].items():
-                                print(ii, vv)
-
-                    if uid in FindUid().keys():
-                        for i, v in FindUid()[uid].items():
-                            print("\033[1;33m图形联动信息：\033[0m")
-                            print(i, v)
-                    else:
-                        print("\033[1;33m无图形联动信息\033[0m")
+            if uid in FindUid().keys():
+                for i, v in FindUid()[uid].items():
+                    print("\033[1;33m图形联动信息：\033[0m")
+                    print(i, v)
+            else:
+                    print("\033[1;33m无图形联动信息\033[0m")
 
     print("总构件数：%s" % count)
 
@@ -1131,7 +1083,7 @@ def indicatorCDM():
 
 if __name__ == "__main__":
     pass
-    indicatorCDM()
+    # indicatorCDM()
 
 
     # pass
@@ -1150,7 +1102,7 @@ if __name__ == "__main__":
     # ReadCAD("FireBuildingUnder")
     # ReadCAD("FireFloorFunction")
     # ReadCAD()
-    # FindReadCAD("FireLane type")
+    FindReadCAD("FireLane type")
     # # FindReadCAD("FunctionRoom_EvacuationWidth")
     # FindReadCAD("FunctionRoom_Base",rulelib="XF-A-ZD-合法疏散门个数", resultcode="FH-A-081")
     # print(FindUid())
