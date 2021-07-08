@@ -72,7 +72,7 @@ def esfunction():
         }
         body_matchdata = {
                 "query": { "match_all": {}},
-                "size": 1000000
+                "size": 10000
             }
         result1 = es.search(index='no_match_data_dev',body=body_matchdata)  # index：选择数据库
         result2 = es.search(index='audit_page_dev',body=body_checkdata)  # index：选择数据库

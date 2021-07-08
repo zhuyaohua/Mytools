@@ -17,6 +17,7 @@ import sys
 from progress.bar import Bar
 from jsonpath import jsonpath
 from tool.compare_rule import RuleDispose
+import math
 
 fileresult = open("itemlevel.json", "w+")
 filename = os.path.join(os.path.dirname(os.path.abspath(".")), "file", "pda.json")
@@ -972,23 +973,24 @@ def indicatorCDM():
     landarea = jsonpath(jsondata,"$.landList[*].properties")
     print(landarea)
     #根据用地性质维度
-    form_result = {}
     land = []
     for item_land in landlist:
         temp = {}
-        motor_area = 0
-        nomotor_area = 0
         fitness = 0
         utilities = 0
         basal = 0
         youxiaograndclass = 0
+        outmotor_count = 0
+        land_parkingarea_motor = 0
+        land_parkingarea_nomotor = 0
+
         temp.update({"GH-A-101":item_land["properties"]["GH-A-101"]["Value"],"GH-A-102":item_land["properties"]["GH-A-102"]["Value"],"GH-A-103":item_land["properties"]["GH-A-103"]["Value"],"GH-A-387":item_land["properties"]["GH-A-387"]["Value"]})
         for item_landComponentList in item_land["landComponentList"]:
             if item_landComponentList["name"] == "地形/子面域":
                 if item_landComponentList["properties"]["GH-A-108"]["Value"] == "机动车位":
-                    motor_area += Decimal(item_landComponentList["properties"]["GH-A-176"]["Value"])
+                    land_parkingarea_motor += Decimal(item_landComponentList["properties"]["GH-A-176"]["Value"])
                 if item_landComponentList["properties"]["GH-A-108"]["Value"] == "非机动车位":
-                    nomotor_area += Decimal(item_landComponentList["properties"]["GH-A-176"]["Value"])
+                    land_parkingarea_nomotor += Decimal(item_landComponentList["properties"]["GH-A-176"]["Value"])
                 if item_landComponentList["properties"]["GH-A-108"]["Value"] == "全民健身场所":
                     fitness += Decimal(item_landComponentList["properties"]["GH-A-176"]["Value"])
                 if item_landComponentList["properties"]["GH-A-108"]["Value"] == "市政公用设施点位":
@@ -996,12 +998,19 @@ def indicatorCDM():
                 basal += Decimal(item_landComponentList["properties"]["GH-A-176"]["Value"])
             if "GH-A-108" in item_landComponentList["properties"].keys() and item_landComponentList["properties"]["GH-A-108"]["Value"] == "绿地" and item_landComponentList["name"] == "地形/子面域" and item_landComponentList["properties"]["GH-A-173"]["Value"] == "有效绿地":
                 youxiaograndclass += Decimal(item_landComponentList["properties"]["GH-A-176"]["Value"])
-        temp["机动车位"] = motor_area
-        temp["非机动车位"] = nomotor_area
+
+        for item_parking in item_land["parkingList"]:
+            if len(item_land["parkingList"]) > 0:
+                if item_parking["properties"]["GH-A-138"]["Value"] == "机械式停车位":
+                        outmotor_count += 1 * (lambda: 1 if item_parking["properties"]["GH-A-596"]["Value"] == "" else int(item_parking["properties"]["GH-A-596"]["Value"]))()
+        temp["地块机动车位面积"] = land_parkingarea_motor
+        temp["地块非机动车位面积"] = land_parkingarea_nomotor
         temp["全民健身场所"] = fitness
         temp["市政公用设施点位"] = utilities
         temp["建筑密度"] = basal/Decimal(temp["GH-A-103"])
         temp["有效绿地面积"] = youxiaograndclass
+        temp["室外机械式停车位数"] = outmotor_count
+
 
         land.append(temp)
     print("\033[1;33m%s\033[0m"%land)
@@ -1011,33 +1020,41 @@ def indicatorCDM():
         temp = {}
         residential_area_upper = 0
         residential_area_downner = 0
-        carbarn_area = 0
-        notcarbarn_area = 0
         wudinggrandclass = 0
+        inmotor_count = 0
+        building_parkingarea_motor = 0
+        building_parkingarea_nomotor = 0
         for item_building_area in item_building["areaList"]:
+            count = len(item_building_area["properties"]["GH-A-175"]["Value"].split(";"))
             if item_building_area["properties"]["GH-A-135"]["Value"].startswith("B"):
-                count = len(item_building_area["properties"]["GH-A-175"]["Value"].split(";"))
                 residential_area_downner += Decimal(item_building_area["properties"]["GH-A-176"]["Value"])*Decimal(coefficient[item_building_area["properties"]["SC-TY-40"]["Value"]])*count
-                if item_building_area["properties"]["GH-A-159"]["Value"] == "室内机动车停车库":
-                    carbarn_area += Decimal(item_building_area["properties"]["GH-A-176"]["Value"])*Decimal(coefficient[item_building_area["properties"]["SC-TY-40"]["Value"]])*count
-                if item_building_area["properties"]["GH-A-159"]["Value"] == "室内非机动车停车库":
-                    notcarbarn_area += Decimal(item_building_area["properties"]["GH-A-176"]["Value"])*Decimal(coefficient[item_building_area["properties"]["SC-TY-40"]["Value"]])*count
 
             elif not item_building_area["properties"]["GH-A-135"]["Value"].startswith("B"):
-                count = len(item_building_area["properties"]["GH-A-175"]["Value"].split(";"))
                 residential_area_upper += Decimal(item_building_area["properties"]["GH-A-176"]["Value"])*Decimal(coefficient[item_building_area["properties"]["SC-TY-40"]["Value"]])*count
 
             if item_building_area["properties"]["GH-A-159"]["Value"] == "屋顶" and item_building_area["properties"]["GH-A-183"]["Value"] == "是":
                 wudinggrandclass += Decimal(item_building_area["properties"]["GH-A-176"]["Value"])*Decimal(coefficient[item_building_area["properties"]["SC-TY-40"]["Value"]])
+
+            if "GH-A-159" in item_building_area["properties"].keys() and item_building_area["properties"]["GH-A-159"]["Value"] == "室内机动车停车库":
+                building_parkingarea_motor += Decimal(item_building_area["properties"]["GH-A-176"]["Value"])*Decimal(coefficient[item_building_area["properties"]["SC-TY-40"]["Value"]])
+            if "GH-A-159" in item_building_area["properties"].keys() and item_building_area["properties"]["GH-A-159"]["Value"] == "室内非机动车停车库":
+                building_parkingarea_nomotor += Decimal(item_building_area["properties"]["GH-A-176"]["Value"])*Decimal(coefficient[item_building_area["properties"]["SC-TY-40"]["Value"]])
+
+        for item_building_parking in item_building["parkingList"]:
+            if item_building_parking["properties"]["GH-A-138"]["Value"] == "机械停车位":
+                inmotor_count += 1 * (lambda: 1 if item_parking["properties"]["GH-A-596"]["Value"] == "" else int(
+                    item_parking["properties"]["GH-A-596"]["Value"]))()
 
         temp["buildingNo"] = item_building["buildingNo"]
         temp["landName"] = item_building["landName"]
         temp["GH-A-110"] = item_building["properties"]["GH-A-110"]["Value"]
         temp["地上建筑面积"] = residential_area_upper
         temp["地下建筑面积"] = residential_area_downner
-        temp["建筑-室内机动车停车库"] = carbarn_area
-        temp["建筑-室内非机动车停车库"] = carbarn_area
+        temp["建筑-室内机动车停车库面积"] = building_parkingarea_motor
+        temp["建筑-室内非机动车停车库面积"] = building_parkingarea_nomotor
         temp["临时屋顶绿化面积"] = wudinggrandclass
+        temp["室内机械式停车位数"] = inmotor_count
+
 
         building.append(temp)
     print("\033[1;33m%s\033[0m"%building)
@@ -1045,22 +1062,27 @@ def indicatorCDM():
     for item in land:
         key = item["GH-A-101"]
         temp = []
-        total_motor = item["机动车位"]
-        total_nomotor = item["非机动车位"]
+        total_motor_parkarea = item["地块机动车位面积"]
+        total_nomotor_parkarea = item["地块非机动车位面积"]
         total_construction_area_upper = 0
         total_construction_area_downner = 0
         total_wudinggrandclass = 0
+        total_motor_count = item["室外机械式停车位数"]
         for item_step in building:
             if item_step["landName"] == key:
-                total_motor += item_step["建筑-室内机动车停车库"]
-                item_step.pop("建筑-室内机动车停车库")
-                total_nomotor += item_step["建筑-室内非机动车停车库"]
-                item_step.pop("建筑-室内非机动车停车库")
+                total_motor_parkarea += item_step["建筑-室内机动车停车库面积"]
+                item_step.pop("建筑-室内机动车停车库面积")
+                total_nomotor_parkarea += item_step["建筑-室内非机动车停车库面积"]
+                item_step.pop("建筑-室内非机动车停车库面积")
                 total_construction_area_upper += item_step["地上建筑面积"]
                 total_construction_area_downner += item_step["地下建筑面积"]
                 item_step["屋顶绿化面积"] = item_step["临时屋顶绿化面积"]*Decimal(0.3) if item_step["临时屋顶绿化面积"]*Decimal(0.3) < Decimal(item["GH-A-103"])*Decimal(0.15) else item["GH-A-387"]*Decimal(0.15)
                 item_step.pop("临时屋顶绿化面积")
                 total_wudinggrandclass += item_step["屋顶绿化面积"]
+                total_motor_count += item_step["室内机械式停车位数"]
+                item_step.pop("室内机械式停车位数")
+
+
 
                 temp.append(item_step)
 
@@ -1069,6 +1091,13 @@ def indicatorCDM():
         item["容积率"] = total_construction_area_upper/Decimal(item["GH-A-103"])
         item["绿地率"] = (total_wudinggrandclass+item["有效绿地面积"])/Decimal(item["GH-A-103"])
         item.pop("有效绿地面积")
+        item["机动车位面积"] = total_motor_parkarea
+        item.pop("地块机动车位面积")
+        item["机械停车位占总机动车停车位的比例"]= total_motor_count/math.floor(total_motor_parkarea/2)
+        item["室外地面机动车停车位占总机动车停车位的比例 "] = item["室外机械式停车位数"]/math.floor(total_motor_parkarea/2)
+        item["非机动车位面积"] = total_nomotor_parkarea
+        item.pop("地块非机动车位面积")
+        item.pop("室外机械式停车位数")
         item[key] = temp
 
     print("\033[1;36m%s\033[0m"%land)
@@ -1101,8 +1130,8 @@ if __name__ == "__main__":
     # ReadCAD("FunctionRoom_Base")
     # ReadCAD("FireBuildingUnder")
     # ReadCAD("FireFloorFunction")
-    # ReadCAD()
-    FindReadCAD("FireLane type")
+    ReadCAD()
+    FindReadCAD("FireLane 2")
     # # FindReadCAD("FunctionRoom_EvacuationWidth")
     # FindReadCAD("FunctionRoom_Base",rulelib="XF-A-ZD-合法疏散门个数", resultcode="FH-A-081")
     # print(FindUid())
