@@ -854,26 +854,26 @@ def FindReadCAD(type, condictions=set(), rulelib=None, resultcode=None):
                     temp["manualCheckResult"]=jsonpath(itemCAD["manualCheckResult"],"$.*")
                 resultdic.setdefault(itemCAD["uid"],temp)
 
-            count += len(resultdic)
-            for uid, properties in resultdic.items():
-                print("\033[1;34m*\033[0m" * 100)
-                print(uid)
-                for i, v in properties.items():
-                    if i != "manualCheckResult":print(i, v)
-                    else:
-                        print("manualCheckResult")
-                        for itemmanualdata in v:
+                count += len(resultdic)
+                for uid, properties in resultdic.items():
+                    print("\033[1;34m*\033[0m" * 100)
+                    print(uid)
+                    for i, v in properties.items():
+                        if i != "manualCheckResult":print(i, v)
+                        else:
+                            print("manualCheckResult")
+                            for itemmanualdata in v:
+                                print("\033[1;33m-\033[0m"*100)
+                                for i,v in itemmanualdata.items():
+                                    print(i,v)
                             print("\033[1;33m-\033[0m"*100)
-                            for i,v in itemmanualdata.items():
-                                print(i,v)
-                        print("\033[1;33m-\033[0m"*100)
 
-            if uid in FindUid().keys():
-                for i, v in FindUid()[uid].items():
-                    print("\033[1;33m图形联动信息：\033[0m")
-                    print(i, v)
-            else:
-                    print("\033[1;33m无图形联动信息\033[0m")
+                if uid in FindUid().keys():
+                    for i, v in FindUid()[uid].items():
+                        print("\033[1;33m图形联动信息：\033[0m")
+                        print(i, v)
+                else:
+                        print("\033[1;33m无图形联动信息\033[0m")
 
     print("总构件数：%s" % count)
 
@@ -1130,8 +1130,8 @@ if __name__ == "__main__":
     # ReadCAD("FunctionRoom_Base")
     # ReadCAD("FireBuildingUnder")
     # ReadCAD("FireFloorFunction")
-    ReadCAD()
-    FindReadCAD("FireLane 2")
+    # ReadCAD()
+    FindReadCAD("FunctionRoom_EvacuationDistance",{"网络机房"})
     # # FindReadCAD("FunctionRoom_EvacuationWidth")
     # FindReadCAD("FunctionRoom_Base",rulelib="XF-A-ZD-合法疏散门个数", resultcode="FH-A-081")
     # print(FindUid())
