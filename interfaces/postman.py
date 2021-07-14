@@ -69,17 +69,17 @@ class postman:
         return self.ticket
 
     def interface(self, host, path, method):
-        cookies = {
-            "delivery.tk": self.ticket
-                   }
+        interface_ts = str(int(time.time() * 1000))
+        interface_sign = hashlib.sha1((appkey + "," + path + "," + interface_ts).replace("-", "").encode("utf-8")).hexdigest().lower()
+        cookies = {}
         print(cookies)
         url = host + path
         print("*" * 10, "接口测试", "*" * 10)
         headers = {
             "Content-Type": "application/json;charset=UTF-8",
             "ticket": self.ticket,
-            "ts": self.ts,
-            "sign": self.sign,
+            "ts": interface_ts,
+            "sign": interface_sign,
             "appid": appid
         }  # 将请求信息以字典、元素列表或者字节的方式提供
         print("headers: ", headers)
@@ -137,7 +137,7 @@ if __name__ == "__main__":
 
     # cdm环境
     p = postman("https://c-extapi.cbim.org.cn","shenf@cadg.cn","s123456","delivery")
-    p.interface("https://dev-cbim-design.cbim.org.cn/","/external/api/taskForm/getTaskForms","post")
+    p.interface("https://dev-cbim-design.cbim.org.cn","/external/api/taskForm/getTaskForms","post")
 
     # # CCTC环境
     # p = postman("https://cctc-oms.cbim.org.cn", "2013061@cadg.cn", "d123456", "cadg")

@@ -9,14 +9,29 @@ import pymysql
 
 connpool = {
     "delivery_pro":pymysql.connect(host="172.16.201.185", port=3306, user="root", passwd="1q2w@3e4r"),
-    "delivery_dev":pymysql.connect(host="172.16.201.57", port=3306, user="root", passwd="1q2w@3e4r"),
-    "rule":pymysql.connect(host="172.16.201.122", port=3306, user="root", passwd="dbpass",db="cbim_rule")
+    "delivery_dev":pymysql.connect(host="172.16.201.92", port=3306, user="root", passwd="1q2w@3e4r"),
+    "rule":pymysql.connect(host="172.16.201.122", port=3306, user="root", passwd="dbpass",db="cbim_rule"),
+    "doctool_dev":pymysql.connect(host="172.16.201.122", port=3306, user="root", passwd="dbpass",db="cbim_rule")
 }
 
 def query(db,cmd):
-    cur = connpool[db].cursor()
+    dbcur = connpool[db]
+    cur = dbcur.cursor()
     cur.execute(cmd)
     result = cur.fetchall()
+    # dbcur.close()
+    return result
+
+def insert(db,cmd):
+    dbcur = connpool[db]
+    cur = dbcur.cursor()
+    try:
+        cur.execute(cmd)
+        dbcur.commit()
+    except:
+        dbcur.rollback()
+
+    dbcur.close()
     return result
 
 

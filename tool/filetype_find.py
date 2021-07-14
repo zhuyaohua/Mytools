@@ -8,4 +8,4 @@
 
 import filetype
 
-print(filetype.guess(r"C:\Users\SHENFAN\Desktop\中设数字\CBIM-中设数字-模板\交付模型\测试模型\场地-1.cim").extension)
+print(filetype.guess(r"C:\Users\SHENFAN\Desktop\中设数字\企业微信\WXWork\1688853067030957\Cache\File\2021-07\幼儿园总平面.cim").extension)

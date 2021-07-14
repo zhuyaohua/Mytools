@@ -11,7 +11,7 @@ basedir = os.path.dirname(os.path.abspath("__file__"))
 import json
 from interfaces.postman import postman
 from elasticsearch import Elasticsearch
-import jsonpath
+from jsonpath import jsonpath
 
 
 es = Elasticsearch([{"host":"172.16.201.71","port":9200}])
@@ -52,6 +52,16 @@ def redisfunction(type):
                 if moduleid in str(item,encoding="utf-8"):
                     with open(os.path.join(basedir,"resultfile",str(item,encoding="utf-8")+".json"),"w",encoding="utf-8") as data:
                         data.write(str(re[item],encoding="utf-8"))
+    if type == "doctool_dev":
+        print("---> Redis <---")
+        for item in re.keys():
+            if "cbim_rule:standard:" in str(item,encoding="utf-8"):
+                rawdata = json.loads(str(re[item],encoding="utf-8"))
+                stand = jsonpath(rawdata,"$[1]..*[?(@.name)].name")
+                for item in stand:
+                    print(item)
+                    # with open(os.path.join(basedir,"resultfile",str(item,encoding="utf-8")+".json"),"w",encoding="utf-8") as data:
+                    #     data.write(str(re[item],encoding="utf-8"))
 
 def esfunction():
     print("---> ES数据库 <---")
@@ -83,12 +93,9 @@ def esfunction():
 
 
 if __name__ == "__main__":
-    esfunction()
-    # redisfunction("delivery_dev")
-    # while True:
-    #     redisfunction("delivery_dev")
-    #     esfunction()
-    #     print("*"*100)
+    # esfunction()
+    redisfunction("doctool_dev")
+
 
 
 
