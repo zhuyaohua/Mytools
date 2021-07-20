@@ -1112,7 +1112,7 @@ def indicatorCDM():
 
 if __name__ == "__main__":
     pass
-    indicatorCDM()
+    # indicatorCDM()
 
 
     # pass
@@ -1130,8 +1130,8 @@ if __name__ == "__main__":
     # ReadCAD("FunctionRoom_Base")
     # ReadCAD("FireBuildingUnder")
     # ReadCAD("FireFloorFunction")
-    # ReadCAD()
-    # FindReadCAD("FireBuildingAbove")
+    ReadCAD()
+    FindReadCAD("DetectionArea")
     # # FindReadCAD("FunctionRoom_EvacuationWidth")
-    # FindReadCAD("FunctionRoom_Base",rulelib="XF-A-ZD-合法疏散门个数", resultcode="FH-A-081")
+    # FindReadCAD("FireComponent-wall",rulelib="XF-A-ZD-合法疏散门个数", resultcode="FH-A-081")
     # print(FindUid())
