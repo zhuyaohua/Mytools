@@ -15,14 +15,14 @@ import json
 import os
 import time
 
-appid = "43be49a510d8221efbb2d63d579aab15"
-appkey = "515a2e95179d603d7d82a68102c58ff2"
+# appid = "43be49a510d8221efbb2d63d579aab15"
+# appkey = "515a2e95179d603d7d82a68102c58ff2"
 
 # """
 # cprod
 # """
-# appid = "8d116d26c7d8d73396e15fb4a2cba1ca"
-# appkey = "048b8927d20516ed9a40d8d05dffc18d"
+appid = "8d116d26c7d8d73396e15fb4a2cba1ca"
+appkey = "048b8927d20516ed9a40d8d05dffc18d"
 
 
 
@@ -98,7 +98,7 @@ class postman:
         # with open(r"D:\Doctool\python\工具脚本\file\pda.json","r",encoding="utf-8") as rawdata:
         #     data = json.load(rawdata)
         data = {
-            # "taskId":845467717719822336
+            "userId":425403443055165441
         }  # 将请求信息以字典、元素列表或者字节的方式提供
         files = {
             # "bacthfile": open(r"C:\Users\SHENFAN\Desktop\中设数字\标准模板\房间表\房间用料表.txt","rb")
@@ -135,17 +135,17 @@ if __name__ == "__main__":
     #         print("&"*100,"失败")
     # print("失败%i次"%count)
 
-    # cdm环境
-    p = postman("https://c-extapi.cbim.org.cn","shenf@cadg.cn","s123456","delivery")
-    p.interface("https://dev-cbim-design.cbim.org.cn","/external/api/taskForm/getTaskForms","post")
+    # # cdm环境
+    # p = postman("https://c-extapi.cbim.org.cn","shenf@cadg.cn","s123456","delivery")
+    # p.interface("https://c-extapi.cbim.org.cn","/external/api/user/getUserRoleInEnt","post")
 
     # # CCTC环境
     # p = postman("https://cctc-oms.cbim.org.cn", "2013061@cadg.cn", "d123456", "cadg")
     # p.interface("https://cctc-dms.cbim.org.cn", "/external/api/taskForm/getTaskForms", "post")
 
     #cprod环境交付平台
-    # p = postman("https://cbim-api.cbim.org.cn", "zyfzr1@cadg.cn", "a123456", "cadgbim")
-    # p.interface("https://cbim-design.cbim.org.cn", "/external/api/taskForm/getTaskForms", "post")
+    p = postman("https://cbim-api.cbim.org.cn", "zyfzr1@cadg.cn", "a123456", "cadgbim")
+    p.interface("https://doctool.cbim.org.cn", "/v1/projects/{projectId}/subs", "get")
 
 
 
