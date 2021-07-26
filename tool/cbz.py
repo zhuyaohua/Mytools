@@ -75,9 +75,9 @@ def OuterContoursPoints(*landno):
                     temp.append(itempoint)
         xoypoint[itemno]=temp
 
-    fig = matplotlib.pyplot.figure(figsize=(8, 4),dpi=256)
-    matplotlib.pyplot.xticks(numpy.arange(-4,4,1))
-    matplotlib.pyplot.yticks(numpy.arange(-4,4,1))
+    fig = matplotlib.pyplot.figure(figsize=(200, 100),dpi=256)
+    matplotlib.pyplot.xticks(numpy.arange(0,100,1))
+    matplotlib.pyplot.yticks(numpy.arange(0,160,1))
     for key,value in xoypoint.items():
         x = [p["X"] for p in value]
         y = [p["Y"] for p in value]

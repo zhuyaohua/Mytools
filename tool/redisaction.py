@@ -79,6 +79,7 @@ def esfunction():
     else:
         body_checkdata = {
             "query":{'term': {"modelId":modelid}},
+            "size": 10000
         }
         body_matchdata = {
                 "query": { "match_all": {}},
@@ -93,8 +94,8 @@ def esfunction():
 
 
 if __name__ == "__main__":
-    # esfunction()
-    redisfunction("doctool_dev")
+    esfunction()
+    # redisfunction("doctool_dev")
 
 
 
