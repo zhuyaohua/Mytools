@@ -851,7 +851,8 @@ def FindReadCAD(type, condictions=set(), rulelib=None, resultcode=None):
             if condictions < set(resultvalues):
                 temp = itemCAD["properties"]
                 if "manualCheckResult" in itemCAD.keys():
-                    temp["manualCheckResult"]=jsonpath(itemCAD["manualCheckResult"],"$.*")
+                    # temp["manualCheckResult"]=jsonpath(itemCAD["manualCheckResult"],"$.*")
+                    temp["manualCheckResult"]=itemCAD["manualCheckResult"]
                 resultdic.setdefault(itemCAD["uid"],temp)
 
                 count += len(resultdic)
@@ -861,12 +862,13 @@ def FindReadCAD(type, condictions=set(), rulelib=None, resultcode=None):
                     for i, v in properties.items():
                         if i != "manualCheckResult":print(i, v)
                         else:
-                            print("manualCheckResult")
-                            for itemmanualdata in v:
-                                print("\033[1;33m-\033[0m"*100)
-                                for i,v in itemmanualdata.items():
-                                    print(i,v)
                             print("\033[1;33m-\033[0m"*100)
+                            print("manualCheckResult")
+                            for itemmanualkey,itemmanualdata in v.items():
+                                print("\033[1;34m%s\033[0m  \033[1;35m%s\033[0m"%(itemmanualkey,itemmanualdata["SC-TY-48"]))
+                                # for i,v in itemmanualdata.items():
+                                print(list(itemmanualdata.values()))
+
 
                 if uid in FindUid().keys():
                     for i, v in FindUid()[uid].items():
@@ -874,6 +876,7 @@ def FindReadCAD(type, condictions=set(), rulelib=None, resultcode=None):
                         print(i, v)
                 else:
                         print("\033[1;33m无图形联动信息\033[0m")
+                print()
 
     print("总构件数：%s" % count)
 
@@ -1131,7 +1134,7 @@ if __name__ == "__main__":
     # ReadCAD("FireBuildingUnder")
     # ReadCAD("FireFloorFunction")
     ReadCAD()
-    FindReadCAD("DetectionArea")
+    FindReadCAD("FireLift")
     # # FindReadCAD("FunctionRoom_EvacuationWidth")
     # FindReadCAD("FireComponent-wall",rulelib="XF-A-ZD-合法疏散门个数", resultcode="FH-A-081")
     # print(FindUid())
