@@ -15,14 +15,14 @@ import json
 import os
 import time
 
-# appid = "43be49a510d8221efbb2d63d579aab15"
-# appkey = "515a2e95179d603d7d82a68102c58ff2"
+appid = "43be49a510d8221efbb2d63d579aab15"
+appkey = "515a2e95179d603d7d82a68102c58ff2"
 
 # """
 # cprod
 # """
-appid = "8d116d26c7d8d73396e15fb4a2cba1ca"
-appkey = "048b8927d20516ed9a40d8d05dffc18d"
+# appid = "8d116d26c7d8d73396e15fb4a2cba1ca"
+# appkey = "048b8927d20516ed9a40d8d05dffc18d"
 
 
 
@@ -71,10 +71,12 @@ class postman:
     def interface(self, host, path, method):
         interface_ts = str(int(time.time() * 1000))
         interface_sign = hashlib.sha1((appkey + "," + path + "," + interface_ts).replace("-", "").encode("utf-8")).hexdigest().lower()
-        cookies = {}
-        print(cookies)
+        cookies = {#"delivery.tk": self.ticket,
+                   #"tool.tk":self.ticket
+                   }
         url = host + path
         print("*" * 10, "接口测试", "*" * 10)
+        print(cookies)
         headers = {
             "Content-Type": "application/json;charset=UTF-8",
             "ticket": self.ticket,
@@ -89,16 +91,13 @@ class postman:
             # "majorId":1
         }
         params = {
-            # "city":"成都",
-            # "type":1
-            # "projectId":4089,
-            # "subProjectId":2178
+            # "taskFormId":935696130157580288
         }  # 将请求信息以字典、元素列表或者字节的方式提供
         print("params: ", params)
         # with open(r"D:\Doctool\python\工具脚本\file\pda.json","r",encoding="utf-8") as rawdata:
         #     data = json.load(rawdata)
         data = {
-            "userId":425403443055165441
+            # "userId":425403443055165441
         }  # 将请求信息以字典、元素列表或者字节的方式提供
         files = {
             # "bacthfile": open(r"C:\Users\SHENFAN\Desktop\中设数字\标准模板\房间表\房间用料表.txt","rb")
@@ -135,17 +134,21 @@ if __name__ == "__main__":
     #         print("&"*100,"失败")
     # print("失败%i次"%count)
 
-    # # cdm环境
-    # p = postman("https://c-extapi.cbim.org.cn","shenf@cadg.cn","s123456","delivery")
-    # p.interface("https://c-extapi.cbim.org.cn","/external/api/user/getUserRoleInEnt","post")
+    # cdm环境
+    p = postman("https://c-extapi.cbim.org.cn","shenf@cadg.cn","s123456","delivery")
+    p.interface("https://dev-cbim-design.cbim.org.cn","/external/api/taskForm/getTaskForms","post")
+
+    # p1 = postman("https://c-extapi.cbim.org.cn","shenf@cadg.cn","s123456","delivery")
+    # p1.interface("https://hzm-eco-dev.cbim.org.cn","/api/cbim-delivery/pda/v2/base/projects","get")
+    # p1.interface("https://dev-cbim-design.cbim.org.cn","/external/api/taskForm/getTaskForms","post")
 
     # # CCTC环境
     # p = postman("https://cctc-oms.cbim.org.cn", "2013061@cadg.cn", "d123456", "cadg")
     # p.interface("https://cctc-dms.cbim.org.cn", "/external/api/taskForm/getTaskForms", "post")
 
     #cprod环境交付平台
-    p = postman("https://cbim-api.cbim.org.cn", "zyfzr1@cadg.cn", "a123456", "cadgbim")
-    p.interface("https://doctool.cbim.org.cn", "/v1/projects/{projectId}/subs", "get")
+    # p = postman("https://cbim-api.cbim.org.cn", "shenf@cadg.cn", "s123456", "WorkBench")
+    # p.interface("https://cbim-design.cbim.org.cn", "/external/api/taskForm/getTaskForms", "POST")
 
 
 

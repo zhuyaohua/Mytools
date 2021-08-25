@@ -834,6 +834,8 @@ def Findmanual():
 
 
 def FindReadCAD(type, condictions=set(), rulelib=None, resultcode=None):
+    if rulelib:
+        checkdata = RuleDispose(rulelib, resultcode).ruledata()
     uid = {}
     count = 0
     #联动信息提取
@@ -859,15 +861,20 @@ def FindReadCAD(type, condictions=set(), rulelib=None, resultcode=None):
                 for uid, properties in resultdic.items():
                     print("\033[1;34m*\033[0m" * 100)
                     print(uid)
+
                     for i, v in properties.items():
-                        if i != "manualCheckResult":print(i, v)
+                        if i != "manualCheckResult":
+                            print(i, v)
+
                         else:
                             print("\033[1;33m-\033[0m"*100)
                             print("manualCheckResult")
                             for itemmanualkey,itemmanualdata in v.items():
                                 print("\033[1;34m%s\033[0m  \033[1;35m%s\033[0m"%(itemmanualkey,itemmanualdata["SC-TY-48"]))
-                                # for i,v in itemmanualdata.items():
                                 print(list(itemmanualdata.values()))
+                    if rulelib:
+                        result = check(checkdata,properties)
+                        print("合法值为：%s"%result)
 
 
                 if uid in FindUid().keys():
@@ -896,9 +903,10 @@ def is_number(s):
         return False
 
 def check(ruledata, checkdata):
+    print("\033[1;31m匹配中","...\033[0m"*10)
     global vaildresultkey
     vaildresult = {}
-    print("规则总数%s"%len(ruledata))
+    print("\033[1;31m规则总数：%s\033[0m"%len(ruledata))
     count = 0
     for ruleitems in ruledata:
         flag = True
@@ -939,7 +947,8 @@ def check(ruledata, checkdata):
             for key in ruleitems:
                 if isinstance(key, tuple): vaildresult[key]= ruleitems[key]
             break
-    print("第%s次命中"%count)
+    print("\033[1;31m第%s次命中\033[0m"%count)
+    print("\033[1;31m匹配完成\033[0m")
     return vaildresult
 
 
@@ -1134,7 +1143,7 @@ if __name__ == "__main__":
     # ReadCAD("FireBuildingUnder")
     # ReadCAD("FireFloorFunction")
     ReadCAD()
-    FindReadCAD("FireLift")
+    # FindReadCAD("FunctionRoom_EvacuationDistance")
     # # FindReadCAD("FunctionRoom_EvacuationWidth")
-    # FindReadCAD("FireComponent-wall",rulelib="XF-A-ZD-合法疏散门个数", resultcode="FH-A-081")
+    FindReadCAD("FunctionRoom_EvacuationDistance",rulelib="XF-A-ZD-房间内任一点至疏散门的合法距离",resultcode="FH-A-090")
     # print(FindUid())
