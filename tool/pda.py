@@ -1145,5 +1145,5 @@ if __name__ == "__main__":
     ReadCAD()
     # FindReadCAD("FunctionRoom_EvacuationDistance")
     # # FindReadCAD("FunctionRoom_EvacuationWidth")
-    FindReadCAD("FunctionRoom_EvacuationDistance",rulelib="XF-A-ZD-房间内任一点至疏散门的合法距离",resultcode="FH-A-090")
+    FindReadCAD("FireBuildingAbove",rulelib="XF-A-ZD-建筑耐火等级",resultcode="FH-A-041")
     # print(FindUid())
