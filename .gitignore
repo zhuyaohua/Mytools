@@ -1,4 +1,5 @@
 pda.json
 cda.json
-/tool/resultfile/output/
-/file/
+/tool/resultfile/output/*
+/file/*.json
+/tool/resultfile/*
