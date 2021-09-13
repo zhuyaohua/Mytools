@@ -1128,9 +1128,9 @@ if __name__ == "__main__":
 
 
     # pass
-    # Area()
+    Area()
     # ResidentialServicesAudit()
-    # ParkingAudit()
+    ParkingAudit()
     # MonomerFormResidential()
     # MonomerFormNonResidential()
     # Specialarea(address="GB")
@@ -1142,8 +1142,7 @@ if __name__ == "__main__":
     # ReadCAD("FunctionRoom_Base")
     # ReadCAD("FireBuildingUnder")
     # ReadCAD("FireFloorFunction")
-    ReadCAD()
-    # FindReadCAD("FunctionRoom_EvacuationDistance")
-    # # FindReadCAD("FunctionRoom_EvacuationWidth")
-    FindReadCAD("FireBuildingAbove",rulelib="XF-A-ZD-建筑耐火等级",resultcode="FH-A-041")
+    # ReadCAD()
+    # FindReadCAD("FunctionRoom_Base")
+    # FindReadCAD("FireBuildingAbove",rulelib="XF-A-ZD-建筑耐火等级",resultcode="FH-A-041")
     # print(FindUid())
