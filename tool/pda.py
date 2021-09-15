@@ -22,6 +22,7 @@ import math
 fileresult = open("itemlevel.json", "w+")
 filename = os.path.join(os.path.dirname(os.path.abspath(".")), "file", "pda.json")
 filenamecad = os.path.join(os.path.dirname(os.path.abspath(".")), "file", "cda.json")
+filenameyjk = os.path.join(os.path.dirname(os.path.abspath(".")), "file","struc.json")
 excelname_BJ = os.path.join(os.path.dirname(os.path.abspath(".")), "file", "分类编码规则表-北京.xls")
 excelname_NJ = os.path.join(os.path.dirname(os.path.abspath(".")), "file", "分类编码规则表-南京.xls")
 major_file = os.path.join(os.path.dirname(os.path.abspath(".")), "file", "major_code")
@@ -1118,6 +1119,38 @@ def indicatorCDM():
             print("\033[1;34m{0} 《===》{1}\033[0m".format(i,v))
 
 
+#盈建科模型审查
+def yjk(*type):
+    with open(filenameyjk,"r",encoding="utf-8") as data:
+        yjkdata = json.loads(data.read())
+    types = jsonpath(yjkdata,"$.objects..type")
+    structdatas = jsonpath(yjkdata,"$.objects.*")
+    count = 0
+    if len(type) != 0:
+        for item in structdatas:
+            if type[0] in types:
+                if type[0] in item.values():
+                    print("*"*60)
+                    print("\033[1;31m %s \033[0m"%type[0])
+                    for key,value in item["properties"].items():
+                        print("%s:\033[1;32m %s\033[0m"%(key,value["Value"]))
+                    count += 1
+            else:print("\033[1;32m无%s审查项数据\033[0m"%type[0])
+    else:
+        print("\033[1;31m 总构建信息： \033[0m")
+        for item in structdatas:
+            print("*"*60)
+
+            if item["type"] == "GraphicLinkage":
+                continue
+            print("\033[1;32m%s\033[0m"%item["type"])
+            for key,value in item["properties"].items():
+                print("%s:\033[1;32m %s\033[0m"%(key,value["Value"]))
+            count += 1
+    print("构件总数: \033[1;36m%s\033[0m"%count)
+
+
+
 
 
 
@@ -1128,9 +1161,9 @@ if __name__ == "__main__":
 
 
     # pass
-    Area()
+    # Area()
     # ResidentialServicesAudit()
-    ParkingAudit()
+    # ParkingAudit()
     # MonomerFormResidential()
     # MonomerFormNonResidential()
     # Specialarea(address="GB")
@@ -1146,3 +1179,4 @@ if __name__ == "__main__":
     # FindReadCAD("FunctionRoom_Base")
     # FindReadCAD("FireBuildingAbove",rulelib="XF-A-ZD-建筑耐火等级",resultcode="FH-A-041")
     # print(FindUid())
+    yjk()

@@ -78,15 +78,14 @@ def esfunction():
         es.delete_by_query(index='audit_page_dev',body=body_checkdata)
     else:
         body_checkdata = {
-            "query":{'term': {"modelId":modelid}},
-            "size": 10000
+            "query":{"bool":{"must":[{"match":{"modelId":modelid}}],"must_not":[],"should":[]}},"from":0,"size":1000,"sort":[],"aggs":{}
         }
         body_matchdata = {
                 "query": { "match_all": {}},
                 "size": 10000
             }
         result1 = es.search(index='no_match_data_dev',body=body_matchdata)  # index：选择数据库
-        result2 = es.search(index='audit_page_test',body=body_checkdata)  # index：选择数据库
+        result2 = es.search(index='audit_page_dev',body=body_checkdata)  # index：选择数据库
         with open(os.path.join(basedir,"resultfile","Es_no_match_data.json"),"w") as resultdata1:
             resultdata1.write(json.dumps(result1,indent=4, ensure_ascii=False))
         with open(os.path.join(basedir,"resultfile",modelid+"Es_result_audit.json"),"w") as resultdata2:
