@@ -1,6 +1,6 @@
 // globals
 var sss = new Date().getTime();
-var wsServer1 = 'ws://172.16.201.184:10148';
+var wsServer1 = 'ws://192.168.0.54:10118';
 // var wsServer1 = 'ws://127.0.0.1:9080';
 
 var ws1;

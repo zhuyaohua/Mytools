@@ -96,7 +96,7 @@ class postman:
 
         headers = {
             "Content-Type": "application/json;charset=UTF-8",
-            # "env":"cdev"
+            "env":"cdev",
             "ticket": self.ticket,
             "ts": interface_ts,
             "sign": interface_sign,
@@ -110,7 +110,7 @@ class postman:
         }
         params = {
             # "projectId":947978427435061248,
-            # "subProjectId":947978427435061248
+            # "owner":420440199909867521
 
         }  # 将请求信息以字典、元素列表或者字节的方式提供
         print("params: ", params)
@@ -120,11 +120,13 @@ class postman:
         # with open(r"D:\Doctool\python\工具脚本\file\doctool.html","r",encoding="utf-8") as rawdata:
         #     data = rawdata.read()
         data = {
-            # "templateId":2676,
-            # "commonParamId":1,
-            # "commonParamValue":data
-
+            "currentNodeId":3,
+            "id": "1446684199476156160",
+            "linkId": "8120",
+            "linkType": 1,
+            "nextNodeId": 4
         }  # 将请求信息以字典、元素列表或者字节的方式提供
+        data = [data]
         if path_params:
             if isinstance(path_params, dict):
                 url = url.format(**path_params)
@@ -204,13 +206,13 @@ if __name__ == "__main__":
     # print("失败%i次"%count)
 
     # cdm环境
-    # p = postman("https://c-extapi.cbim.org.cn","shenf@cadg.cn","s123456","delivery")
-    # p.interface("https://dev-doctool.cbim.org.cn","/api/doctool/v1/delivery/file/push/param","post")
+    p = postman("https://c-extapi.cbim.org.cn","shenf@cadg.cn","s123456","delivery")
+    p.interface("https://deliverytest.cbim.org.cn:8888","/api/cbim-delivery/pda/v1/route/insertOrUpdateBatch","post")
 
-    p1 = postman("https://c-extapi.cbim.org.cn","shenf@cadg.cn","s123456","delivery")
-    # p1.interface("https://hzm-eco-dev.cbim.org.cn","/api/cbim-delivery/pda/v2/base/projects","get")
+    # p1 = postman("https://c-extapi.cbim.org.cn","Delivery-dev-01@cadg.cn","d123456","delivery")
+    # p1.interface("https://deliverytest.cbim.org.cn:8888","/api/cbim-delivery/pda/v2/base/projects","get")
     # p1.interface("https://dev-cbim-design.cbim.org.cn","/external/api/taskForm/getTaskForms","post")
-    p1.interface_cbim30("https://test-cas.cbim.org.cn:8443","/v1/external/user/ticket","post")
+    # p1.interface_cbim30("https://test-cas.cbim.org.cn:8443","/v1/external/user/ticket","post")
 
     # # CCTC环境
     # p = postman("https://cctc-oms.cbim.org.cn", "2013061@cadg.cn", "d123456", "cadg")

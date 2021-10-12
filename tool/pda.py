@@ -99,10 +99,7 @@ def Area():
                             newunderarea += Decimal(item_building_area["properties"]["GH-A-176"]["Value"]) * count
                         # 新建地上建筑面积
                         elif not item_building_area["properties"]["GH-A-135"]["Value"].startswith("B"):
-                            # print("\033[1;35m%s建筑\033[0m 新建地上标准楼层 \033[1;35m%s\033[0m 的构建：" %(item_building["properties"]["GH-A-109"]["Value"],item_building_area["properties"]["GH-A-175"]["Value"]),item_building_area["uid"])
-                            # print(item_building_area["properties"]["GH-A-135"],
-                            #       item_building_area["properties"]["GH-A-175"],
-                            #       item_building_area["properties"]["GH-A-176"])
+                            print("\033[1;35m%s建筑\033[0m 新建地上标准楼层 \033[1;35m%s\033[0m 的构建：" %(item_building["properties"]["GH-A-109"]["Value"],item_building_area["properties"]["GH-A-175"]["Value"]),item_building_area["uid"])
                             count = len(item_building_area["properties"]["GH-A-175"]["Value"].split(";"))
                             newuparea += Decimal(item_building_area["properties"]["GH-A-176"]["Value"]) * count
                 # 保留
@@ -213,8 +210,11 @@ def ParkingAudit():
                 if item_parking["properties"]["GH-A-370"]["Value"] == "是":
                     outCharging += 1
                 if item_parking["properties"]["GH-A-138"]["Value"] == "自走式停车位":
-                    selfparking_F += 1 * (lambda: 1 if item_parking["properties"]["GH-A-596"]["Value"] == "" else int(
-                        item_parking["properties"]["GH-A-596"]["Value"]))()
+                    if "GH-A-596" in item_parking["properties"]:
+                        selfparking_F += 1 * (lambda: 1 if item_parking["properties"]["GH-A-596"]["Value"] == "" else int(
+                            item_parking["properties"]["GH-A-596"]["Value"]))()
+                    else:
+                        selfparking_F += 1
             print("自走式停车位(F)：", selfparking_F)
             print("*" * 100)
         else:
@@ -920,7 +920,7 @@ def check(ruledata, checkdata):
         checkkeys = list(ruleitems.keys())  # 待校验参数
         checkkeys.remove(vaildresultkey)
         for checkkey in checkkeys:
-            if checkkey not in checkdata.keys():
+            if checkkey not in checkdata.keys() or (checkdata[checkkey] == "" or "-"):
                 checkdata[checkkey] = {"Value": "未给值"}
                 print("\033[1;31m缺少参数：%s\033[0m" % checkkey)
 
@@ -1125,6 +1125,7 @@ def yjk(*type):
         yjkdata = json.loads(data.read())
     types = jsonpath(yjkdata,"$.objects..type")
     structdatas = jsonpath(yjkdata,"$.objects.*")
+    structstanders = set(jsonpath(yjkdata,"$.objects..properties.SC-TY-30.Value"))
     count = 0
     if len(type) != 0:
         for item in structdatas:
@@ -1148,6 +1149,8 @@ def yjk(*type):
                 print("%s:\033[1;32m %s\033[0m"%(key,value["Value"]))
             count += 1
     print("构件总数: \033[1;36m%s\033[0m"%count)
+    print("审查的规范为： \033[1;36m%s\033[0m"%structstanders)
+    print("审查的范围为： \033[1;36m%s\033[0m"%set(types))
 
 
 
@@ -1166,7 +1169,7 @@ if __name__ == "__main__":
     # ParkingAudit()
     # MonomerFormResidential()
     # MonomerFormNonResidential()
-    # Specialarea(address="GB")
+    Specialarea("特殊计算系数-GB","GH-A-435")
     # roomlist()
     # read_excel(excelname_BJ)
     # PlanningLandUse("5")
@@ -1179,4 +1182,4 @@ if __name__ == "__main__":
     # FindReadCAD("FunctionRoom_Base")
     # FindReadCAD("FireBuildingAbove",rulelib="XF-A-ZD-建筑耐火等级",resultcode="FH-A-041")
     # print(FindUid())
-    yjk()
+    # yjk()
