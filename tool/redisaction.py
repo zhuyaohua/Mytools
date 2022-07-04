@@ -23,7 +23,8 @@ pool = {
     "doctool_test":redis.ConnectionPool(host="172.16.201.71",port=6379,db="0",password="123123"),
     "delivery_pro":redis.ConnectionPool(host="172.16.201.185",port=6379,db="0",password="1q2w@3e4r"),
     "delivery_dev":redis.ConnectionPool(host="172.16.201.92",port=6379,db="0",password="1q2w@3e4r"),
-    "doctool_dev":redis.ConnectionPool(host="172.16.201.122",port=6379,db="0",password="cbim2020")
+    "doctool_dev":redis.ConnectionPool(host="172.16.201.122",port=6379,db="0",password="cbim2020"),
+
 }
 
 def redisfunction(type):

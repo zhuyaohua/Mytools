@@ -5,7 +5,6 @@
 @Author:   shenfan
 @Time:     2021/2/1 17:11
 """
-
-import filetype
-
-print(filetype.guess(r"C:\Users\SHENFAN\Desktop\中设数字\企业微信\WXWork\1688853067030957\Cache\File\2021-07\幼儿园总平面.cim").extension)
+import magic
+import os
+print(magic.from_buffer(open(r"D:\Doctool\HTML\20220322笔记",'rb').read(2048)))
